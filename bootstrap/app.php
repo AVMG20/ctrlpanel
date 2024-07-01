@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: [
             '*',
         ]);
+        $middleware->trustHosts(at: ['avmg.dev']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
