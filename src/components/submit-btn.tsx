@@ -12,6 +12,6 @@ export default function SubmitBtn() {
                 </>
             )}
             {!pending && <>Submit</>}
-        < /button>
+        </button>
     );
 }
