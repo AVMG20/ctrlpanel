@@ -13,7 +13,7 @@ export default async function Home() {
     );
 }
 
-export function Stats() {
+function Stats() {
     const stats = [
         {
             title: 'Servers',
