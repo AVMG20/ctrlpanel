@@ -1,6 +1,6 @@
 import {auth} from "@/auth";
 import {ChartNoAxesColumnIncreasing, Coins, DownloadIcon, GrabIcon, Server} from "lucide-react";
-import PageTitle from "@/components/util/PageTitle";
+import PageTitle from "@/components/util/page-title";
 
 export default async function Home() {
     const session = await auth()
