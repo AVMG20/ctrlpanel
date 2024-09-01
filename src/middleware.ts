@@ -1,15 +1,17 @@
-import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
+import { auth } from "@/auth"
+import {NextRequest} from "next/server";
 
-export default withAuth(function middleware(req) {
-    if (!req.nextauth.token) {
-        const url = req.nextUrl.clone();
-        url.pathname = "/api/auth/signin";
-        return NextResponse.rewrite(url);
+export default auth((req : NextRequest) => {
+    if (!req.auth && req.nextUrl.pathname !== "/api/auth/signin") {
+        const newUrl = new URL("/api/auth/signin", req.nextUrl.origin)
+        return Response.redirect(newUrl)
     }
-    return NextResponse.next();
-});
+})
 
 export const config = {
-    matcher: ["/dashboard","/admin"],// Routes you want to protect
-};
+    matcher: [
+        "/dashboard",
+        "/settings",
+        "/admin"
+    ],
+}

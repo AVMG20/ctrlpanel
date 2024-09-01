@@ -1,21 +1,56 @@
-import Link from 'next/link';
-import {getServerSession} from "next-auth";
+import {auth} from "@/auth";
+import {ChartNoAxesColumnIncreasing, Coins, DownloadIcon, GrabIcon, Server} from "lucide-react";
+import PageTitle from "@/components/util/PageTitle";
 
 export default async function Home() {
-    const session = await getServerSession()
+    const session = await auth()
 
     return (
-
-        <div className="hero bg-base-200 min-h-screen">
-            <div className="hero-content text-center">
-                <div className="max-w-md">
-                    <h1 className="text-5xl font-bold">Hello there</h1>
-                    <p>Welcome {session?.user?.name}. Signed In As</p>
-                    <p>{session?.user?.email}</p>
-                    <Link href={'/store'} className="btn btn-primary">Get Started</Link>
-                </div>
-            </div>
-        </div>
-
+        <>
+            <PageTitle title="Dashboard" description="Overview of your account and services."/>
+            <Stats/>
+        </>
     );
+}
+
+export function Stats() {
+    const stats = [
+        {
+            title: 'Servers',
+            value: '3',
+            desc: 'Total servers',
+            icon: <Server/>,
+            color: 'text-primary'
+        },
+        {
+            title: 'Credits',
+            value: '100',
+            desc: 'Total credits owned',
+            icon: <Coins />,
+            color: 'text-secondary'
+        },
+        {
+            title: 'Usage',
+            value: '10',
+            desc: 'Usage per month',
+            icon: <ChartNoAxesColumnIncreasing />,
+            color: 'text-accent'
+        }
+    ]
+
+    //loop through stats and render them
+    return (
+        <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((stat, index) => (
+                <div key={index} className="stat bg-base-300 rounded">
+                <div className={`stat-figure ${stat.color}`}>
+                        {stat.icon}
+                    </div>
+                    <div className="stat-title">{stat.title}</div>
+                    <div className="stat-value">{stat.value}</div>
+                    <div className="stat-desc">{stat.desc}</div>
+                </div>
+            ))}
+        </div>
+    )
 }
