@@ -94,42 +94,25 @@ const services = [{
 }];
 
 
-export default function Store() {
+export default async function Store() {
     return (
-        <>
-            <div className="flex flex-wrap gap-5">
-                {services.map((service) => (
-                    <Link key={service.id}
-                          href={`/store/service/${service.id}`}
-                          className="block card bordered rounded size-64 cursor-pointer hover:shadow-2xl hover:text-primary relative">
-                        <div className="absolute inset-0 bg-no-repeat bg-cover rounded"
-                             style={{backgroundImage: `url(${service.image})`}}
-                             aria-hidden="true"></div>
-                        <div className="relative p-4 flex flex-col justify-end h-full">
-                            <h2 className="card-title text-2xl">{service.name}</h2>
-                            <div className="mt-2">
-                                <p className="text-lg">{`from $${service.price} / ${service.priceDescription}`}</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-            </div>
+           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 place-items-center">
+               {services.map((service) => (
+                   <Link key={service.id}
+                         href={`/store/service/${service.id}`}
+                         className="block card bordered rounded w-full h-64 cursor-pointer hover:shadow-2xl hover:text-primary relative">
+                       <div className="absolute inset-0 bg-no-repeat bg-cover rounded"
+                            style={{backgroundImage: `url(${service.image})`}}
+                            aria-hidden="true"></div>
+                       <div className="relative p-4 flex flex-col justify-end h-full">
+                           <h2 className="card-title text-2xl">{service.name}</h2>
+                           <div className="mt-2">
+                               <p className="text-lg">{`from $${service.price} / ${service.priceDescription}`}</p>
+                           </div>
+                       </div>
+                   </Link>
+               ))}
+           </div>
 
-
-            {/*<div className={'flex gap-3'}>*/}
-            {/*    {locations.map((location) => (*/}
-            {/*        <div key={location.id}*/}
-            {/*             className="card bordered bg-base-100 w-96 cursor-pointer hover:shadow-xl hover:bg-primary">*/}
-            {/*            <figure>*/}
-            {/*                <div dangerouslySetInnerHTML={{__html: location.flag}}/>*/}
-            {/*            </figure>*/}
-            {/*            <div className="card-body">*/}
-            {/*                <h2 className="card-title">{location.name}</h2>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    ))}*/}
-            {/*</div>*/}
-
-        </>
     );
 }
