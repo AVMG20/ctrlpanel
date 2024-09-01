@@ -20,7 +20,7 @@ export default function Test() {
                 <span className="font-bold">{formState?.message}</span>
 
                 <SubmitBtn/>
-                </form>
+            </form>
         </div>
     );
 }
