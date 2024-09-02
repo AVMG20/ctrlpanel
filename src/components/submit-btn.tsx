@@ -2,10 +2,10 @@ import {useFormStatus} from "react-dom";
 import {twMerge} from "tailwind-merge";
 
 type SubmitBtnProps = {
-    label: string; btnClass?: string;
+    label?: string; btnClass?: string;
 };
 export default function SubmitBtn({
-    label,
+    label = 'Submit',
     btnClass
 }: SubmitBtnProps) {
     const {pending} = useFormStatus();

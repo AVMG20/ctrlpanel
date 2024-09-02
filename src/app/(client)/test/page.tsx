@@ -4,7 +4,6 @@ import {useFormState} from 'react-dom';
 import {createMessage} from "@/app/(client)/test/actions";
 import SubmitBtn from "@/components/submit-btn";
 
-
 export default function Test() {
     // @ts-ignore
     const [formState, action] = useFormState(createMessage, undefined);
