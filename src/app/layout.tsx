@@ -3,6 +3,7 @@ import {Inter} from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "@/components/auth/session-wrapper";
 import NavBar from "@/app/navbar";
+import {auth} from "@/auth";
 
 const inter = Inter({subsets: ["latin"]});
 
