@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { useParams } from 'next/navigation'
 
+export const revalidate = 60;
+
 const configurations = [
     { id: 1, name: 'Bargain 1', ram: '1 GB', price: '0.85', vCore: 0.5, databases: 1, storage: 10240 }, // 10 GB
     { id: 2, name: 'Bargain 2', ram: '2 GB', price: '1.70', vCore: 1, databases: 2, storage: 20480 }, // 20 GB
@@ -13,13 +15,11 @@ const configurations = [
     { id: 8, name: 'Deluxe 2', ram: '10 GB', price: '8.50', vCore: 4, databases: 8, storage: 102400 }, // 100 GB
 ];
 
-export default function PricingCards() {
-    const params = useParams<{ service: string }>()
-    const serviceId = params.service;
-
+export default function PricingCards({ params }: { params: { service: string } }) {
 
     return (
         <>
+            <p>{params.service}</p>
             <div className={'p-5 text-center'}>
                <h1 className={'text-2xl'}> Minecraft Server Hosting</h1>
                 <p>Money Back Guarantee | 24/7 + Hundreds of Features | Minecraft Hosting from $0.85/mo</p>
@@ -74,7 +74,7 @@ export default function PricingCards() {
                                 </li>
                             </ul>
                             <div className="card-actions justify-center mt-4">
-                                <Link href={`${serviceId}/config/${config.id}/checkout`}
+                                <Link href={`${params.service}/config/${config.id}/checkout`}
                                       className="btn btn-primary w-full">ORDER NOW</Link>
                             </div>
                         </div>

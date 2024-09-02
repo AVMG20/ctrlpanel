@@ -1,5 +1,4 @@
 'use client';
-
 import Link from "next/link";
 import {useFormState} from "react-dom";
 import login, {FieldErrors} from "@/app/auth/login/actions";
@@ -8,6 +7,10 @@ import SubmitBtn from "@/components/submit-btn";
 
 export default function Login() {
     const [state, action] = useFormState<FieldErrors, FormData>(login, {});
+
+    if (state?.success) {
+        window.location.href = '/dashboard'
+    }
 
     return (
         <div className="min-h-screen bg-base-200 flex items-center justify-center">

@@ -1,6 +1,9 @@
 import Link from 'next/link';
 
 export default function Home() {
+
+    const random = Math.floor(Math.random() * 1000);
+
     return (
         <div>
             <div className="hero bg-base-200 min-h-screen">
@@ -11,6 +14,7 @@ export default function Home() {
                             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
                             quasi. In deleniti eaque aut repudiandae et a id nisi.
                         </p>
+                        <p>{random}</p>
                         <Link href={'/store'} className="btn btn-primary">Get Started</Link>
                     </div>
                 </div>

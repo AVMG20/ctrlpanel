@@ -11,7 +11,8 @@ export type FieldErrors = {
     message?: string,
     email?: string[],
     password?: string[],
-    username?: string[]
+    username?: string[],
+    success?: boolean
 } | undefined
 
 export default async function login(prevState: FieldErrors, formData: FormData) {
@@ -39,7 +40,8 @@ export default async function login(prevState: FieldErrors, formData: FormData) 
             }
         }
     }
-
-    revalidatePath('/')
-    redirect('/dashboard');
+    
+    return {
+        success: true
+    }
 }
