@@ -7,7 +7,7 @@ import React from "react";
 
 export default function Sidebar() {
     return (
-        <ul className="menu bg-base-100 text-base-content min-h-full w-80 p-4">
+        <ul className="menu bg-base-100 text-base-content min-h-full w-72 p-4 space-y-1">
             <SidebarLink href={'/dashboard'} title={'Dashboard'} Icon={Home}/>
             <SidebarLink href={'/servers'} title={'Servers'} Icon={Server}/>
             <SidebarLink href={'/credits'} title={'Credits'} Icon={Coins}/>
