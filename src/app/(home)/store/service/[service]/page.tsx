@@ -1,6 +1,4 @@
-'use client';
 import Link from "next/link";
-import { useParams } from 'next/navigation'
 
 export const revalidate = 60;
 
@@ -16,10 +14,11 @@ const configurations = [
 ];
 
 export default function PricingCards({ params }: { params: { service: string } }) {
+    const random = Math.floor(Math.random() * 1000);
 
     return (
         <>
-            <p>{params.service}</p>
+            <p>{random}</p>
             <div className={'p-5 text-center'}>
                <h1 className={'text-2xl'}> Minecraft Server Hosting</h1>
                 <p>Money Back Guarantee | 24/7 + Hundreds of Features | Minecraft Hosting from $0.85/mo</p>
