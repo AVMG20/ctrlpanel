@@ -67,4 +67,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return null;
         },
     })],
+    pages: {
+        signIn: '/auth/login',
+        signOut: '/auth/logout',
+    },
 })

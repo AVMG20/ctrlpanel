@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import {Coins, Home, Server, TicketIcon} from "lucide-react";
+import {Coins, Home, Server, TicketIcon, UserIcon} from "lucide-react";
 import {usePathname} from "next/navigation";
 import React from "react";
 

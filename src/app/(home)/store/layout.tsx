@@ -1,5 +1,4 @@
 import type {Metadata} from "next";
-import {StoreProvider} from "@/app/(home)/store/context";
 
 export const metadata: Metadata = {
     title: "Store",
@@ -12,13 +11,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <StoreProvider>
             <div className="bg-base-200 py-8">
                 <div className="container m-auto">
                     {children}
                 </div>
             </div>
-        </StoreProvider>
-);
+    );
 }
 

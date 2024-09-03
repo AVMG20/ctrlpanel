@@ -42,17 +42,24 @@ export default function Login() {
                         </div>
                     )}
 
+                    {/* TEMP BANNER */}
+                    <div className="text-warning border-b pb-3 border-b-base-300">
+                        under construction! use any email and password to login.
+                    </div>
+
                     <form action={action}>
 
                         <FormInput id={'email'}
                                    label={'Email'}
                                    type="email"
+                                   value={"testing@ctrlpanel.gg"}
                                    errorMessage={state?.email?.shift()}
                                    required/>
 
                         <FormInput id={'password'}
                                    label={'Password'}
                                    type="password"
+                                   value={"hey this is secret!"}
                                    errorMessage={state?.password?.shift()}
                                    required/>
 
@@ -65,7 +72,9 @@ export default function Login() {
                             </span>
                         </div>
 
-                        <SubmitBtn label={'Login'} btnClass={'w-full'}/>
+                        <div className="form-control mt-3">
+                            <SubmitBtn label={'Login'} btnClass={'w-full'}/>
+                        </div>
                     </form>
                 </div>
             </div>

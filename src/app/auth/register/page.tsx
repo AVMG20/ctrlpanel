@@ -79,7 +79,7 @@ export default function Register() {
                             </Link>
                           </span>
                         </div>
-                        <div className="form-control mt-6">
+                        <div className="form-control mt-3">
                             <button type="submit" className="btn btn-primary">Register</button>
                         </div>
                     </form>

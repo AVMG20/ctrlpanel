@@ -3,13 +3,14 @@ import React, {HTMLInputTypeAttribute} from 'react';
 interface FormInputProps<> {
     id: string;
     label: string;
+    value?: string;
     errorMessage?: string
     placeholder?: string;
     type?: HTMLInputTypeAttribute | undefined
     required?: boolean
 }
 
-const FormInput: React.FC<FormInputProps> = ({ id, label, errorMessage, placeholder, type, required }) => {
+const FormInput: React.FC<FormInputProps> = ({ id, label, value,  errorMessage, placeholder, type, required }) => {
     return (
         <div className="form-control mb-3">
             <label className="label" htmlFor={id}>
@@ -19,6 +20,7 @@ const FormInput: React.FC<FormInputProps> = ({ id, label, errorMessage, placehol
                 id={id}
                 name={id}
                 type={type ? type : 'text'}
+                value={value}
                 placeholder={placeholder}
                 className={`input input-bordered ${errorMessage ? 'input-error' : ''}`}
                 required={required}

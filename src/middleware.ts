@@ -2,8 +2,8 @@ import { auth } from "@/auth"
 import {NextRequest} from "next/server";
 
 export default auth((req : NextRequest) => {
-    if (!req.auth && req.nextUrl.pathname !== "/api/auth/signin") {
-        const newUrl = new URL("/api/auth/signin", req.nextUrl.origin)
+    if (!req.auth && req.nextUrl.pathname !== "/auth/login") {
+        const newUrl = new URL("/auth/login", req.nextUrl.origin)
         return Response.redirect(newUrl)
     }
 })
@@ -11,7 +11,11 @@ export default auth((req : NextRequest) => {
 export const config = {
     matcher: [
         "/dashboard",
-        "/settings",
-        "/admin"
+        "/profile",
+        "/store",
+        "/tickets",
+        "/servers",
+        "/credits",
+        "/admin/(.*)"
     ],
 }

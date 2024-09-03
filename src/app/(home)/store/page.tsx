@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-export const revalidate = 60;
-
 const services = [{
     id: 1,
     name: 'Minecraft',

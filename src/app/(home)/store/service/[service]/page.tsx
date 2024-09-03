@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-export const revalidate = 60;
-
 const configurations = [
     { id: 1, name: 'Bargain 1', ram: '1 GB', price: '0.85', vCore: 0.5, databases: 1, storage: 10240 }, // 10 GB
     { id: 2, name: 'Bargain 2', ram: '2 GB', price: '1.70', vCore: 1, databases: 2, storage: 20480 }, // 20 GB
