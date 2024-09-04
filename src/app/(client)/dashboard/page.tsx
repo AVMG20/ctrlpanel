@@ -52,7 +52,7 @@ function Stats() {
 
             <div className="grid gap-5 grid-cols-1 md:grid-cols-2">
                 {/* Large MOTD Card */}
-                <div className="card shadow-lg bg-base-100 w-full h-64">
+                <div className="card shadow-lg bg-base-100 w-full h-fit">
                     <div className="card-body">
                         <h2 className="card-title text-2xl">Message of the Day</h2>
                         <div className="prose">
@@ -68,7 +68,7 @@ function Stats() {
 
 
                 {/* Recent Invoices & Payment History */}
-                <div className="card shadow-lg bg-base-100 w-full h-64">
+                <div className="card shadow-lg bg-base-100 w-full h-fit">
                     <div className="card-body">
                         <h2 className="card-title text-2xl">Recent purchases</h2>
                         <div className="overflow-x-auto">

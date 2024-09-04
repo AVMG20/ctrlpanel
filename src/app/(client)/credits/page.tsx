@@ -17,7 +17,7 @@ export default async function Page() {
             </div>
 
             {/* Grid of Packages */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto container">
                 {packages.map((pkg) => (
                     <div key={pkg.id}
                          className="card bg-base-100 border border-base-300 shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-2 duration-300 ease-in-out rounded-xl">
