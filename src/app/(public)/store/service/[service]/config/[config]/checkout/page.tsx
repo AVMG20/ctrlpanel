@@ -56,7 +56,7 @@ export default function Page() {
                 {/* Right side - Summary */}
                 <div className="w-full md:w-1/2">
                     <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-                    <div className="bg-base-200 p-6 rounded-lg">
+                    <div className="bg-base-200 p-6">
                         <h3 className="text-xl font-semibold mb-2">Bargain-2 Ptero</h3>
                         <p className="text-lg mb-4">Bargain Minecraft Hosting [Ptero]</p>
                         <div className="space-y-2">

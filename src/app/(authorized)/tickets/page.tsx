@@ -53,7 +53,7 @@ export default async function Page() {
 
                 {/* New Ticket Form */}
                 <Card title="Create a new Ticket">
-                    <form className=" p-4 rounded-lg">
+                    <form className="p-4">
                         <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">Title</span>

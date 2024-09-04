@@ -12,7 +12,6 @@ export const config = {
     matcher: [
         "/dashboard",
         "/profile",
-        "/store",
         "/tickets",
         "/servers",
         "/credits",

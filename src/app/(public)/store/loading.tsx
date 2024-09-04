@@ -13,7 +13,7 @@ export default async function Loading() {
 
 function LoadingItem() {
     return (
-        <div className="block card bordered rounded w-full h-64">
+        <div className="block card bordered w-full h-64">
             <div className="skeleton w-full h-full"></div>
         </div>
     );

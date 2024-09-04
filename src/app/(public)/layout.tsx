@@ -1,4 +1,6 @@
 import type {Metadata} from "next";
+import NavBar from "@/app/(public)/navbar";
+import Footer from "@/app/footer";
 
 export const metadata: Metadata = {
     title: "CtrlPanel",
@@ -11,11 +13,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <>
-            <main className={''}>
-                {children}
-            </main>
-        </>
+
+        <div>
+            <NavBar/>
+                <main className={'bg-base-200'}>
+                    {children}
+                </main>
+            <Footer/>
+        </div>
+
     );
 }
 

@@ -86,8 +86,8 @@ export default async function Store() {
                {services.map((service) => (
                    <Link key={service.id}
                          href={`/store/service/${service.id}`}
-                         className="block card bordered rounded w-full h-64 cursor-pointer hover:shadow-2xl hover:text-primary relative">
-                       <div className="absolute inset-0 bg-no-repeat bg-cover rounded"
+                         className="block card bordered w-full h-64 cursor-pointer hover:shadow-2xl hover:text-primary relative">
+                       <div className="absolute card inset-0 bg-no-repeat bg-cover"
                             style={{backgroundImage: `url(${service.image})`}}
                             aria-hidden="true"></div>
                        <div className="relative p-4 flex flex-col justify-end h-full">

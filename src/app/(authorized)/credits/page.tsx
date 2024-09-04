@@ -20,7 +20,7 @@ export default async function Page() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto container">
                 {packages.map((pkg) => (
                     <div key={pkg.id}
-                         className="card bg-base-100 border border-base-300 shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-2 duration-300 ease-in-out rounded-xl">
+                         className="card bg-base-100 border border-base-300 shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-2 duration-300 ease-in-out">
                         <figure className="p-6">
                             <img src={pkg.image}
                                  alt={`${pkg.credits} Credits`}
@@ -33,7 +33,7 @@ export default async function Page() {
                                 <span className="badge badge-neutral badge-lg px-4 py-2 font-semibold">${pkg.price.toFixed(
                                     2)}</span>
                             </div>
-                            <button className="btn btn-accent btn-block mt-6 rounded-lg">
+                            <button className="btn btn-accent btn-block mt-6">
                                 Purchase Now
                             </button>
                         </div>
@@ -43,7 +43,7 @@ export default async function Page() {
 
 
             {/* Voucher Redemption Section */}
-            <div className="mt-16 mx-auto max-w-md shadow-lg rounded-lg p-6">
+            <div className="mt-16 mx-auto max-w-md shadow-lg p-6">
                 <h3 className="text-2xl font-bold text-center mb-4">Have a Voucher?</h3>
                 <div className="form-control">
                     <label className="label">

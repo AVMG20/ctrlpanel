@@ -97,7 +97,7 @@ function Stats() {
         <div>
             <div className="grid gap-5 mb-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                 {stats.map((stat, index) => (
-                    <div key={index} className="stat bg-base-300 rounded">
+                    <div key={index} className="stat card shadow bg-base-100">
                         <div className={`stat-figure ${stat.color}`}>
                             {stat.icon}
                         </div>
