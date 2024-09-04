@@ -1,14 +1,65 @@
-import {auth} from "@/auth";
-import {ChartNoAxesColumnIncreasing, Coins, Server} from "lucide-react";
+import {ChartNoAxesColumn, ChartNoAxesColumnIncreasing, Coins, Server} from "lucide-react";
 import PageTitle from "@/components/util/page-title";
+import Card from "@/components/ui/card";
 
 export default async function Home() {
-    const session = await auth()
-
     return (
         <>
             <PageTitle title="Dashboard" description="Overview of your account and services."/>
             <Stats/>
+
+            <div className="grid gap-5 grid-cols-1 md:grid-cols-2">
+                {/* MOTD Card */}
+                <Card title="Message of the day">
+                    <div className="prose">
+                        <p>⚡ Welcome to the platform! Here's what's new:</p>
+                        <ul>
+                            <li>🚀 New server regions added</li>
+                            <li>🛠 Maintenance on Sept 25</li>
+                            <li>🎉 Special promotion on server upgrades</li>
+                        </ul>
+                    </div>
+                </Card>
+
+
+                {/* Recent Invoices & Payment History */}
+                <Card title="Recent Invoices">
+                    <div className="overflow-x-auto">
+                        <table className="table table-zebra w-full">
+                            <thead>
+                            <tr>
+                                <th>Invoice #</th>
+                                <th>Date</th>
+                                <th>Credits</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>INV-1001</td>
+                                <td>2024-09-10</td>
+                                <td>25000</td>
+                                <td>$50</td>
+                                <td className="text-success">Paid</td>
+                                <td><a href="#" className="link">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>INV-1002</td>
+                                <td>2024-10-10</td>
+                                <td>32000</td>
+                                <td>$60</td>
+                                <td className="text-warning">Pending</td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </Card>
+            </div>
         </>
     );
 }
@@ -32,6 +83,13 @@ function Stats() {
         desc: 'Usage per month',
         icon: <ChartNoAxesColumnIncreasing/>,
         color: 'text-accent'
+    },
+    {
+        title: 'Uptime',
+        value: '99.9%',
+        desc: 'Average uptime',
+        icon:<ChartNoAxesColumn />,
+        color: 'text-success'
     }]
 
     //loop through stats and render them
@@ -48,66 +106,6 @@ function Stats() {
                         <div className="stat-desc">{stat.desc}</div>
                     </div>
                 ))}
-            </div>
-
-            <div className="grid gap-5 grid-cols-1 md:grid-cols-2">
-                {/* Large MOTD Card */}
-                <div className="card shadow-lg bg-base-100 w-full h-fit">
-                    <div className="card-body">
-                        <h2 className="card-title text-2xl">Message of the Day</h2>
-                        <div className="prose">
-                            <p>⚡ Welcome to the platform! Here's what's new:</p>
-                            <ul>
-                                <li>🚀 New server regions added</li>
-                                <li>🛠 Maintenance on Sept 25</li>
-                                <li>🎉 Special promotion on server upgrades</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-
-                {/* Recent Invoices & Payment History */}
-                <div className="card shadow-lg bg-base-100 w-full h-fit">
-                    <div className="card-body">
-                        <h2 className="card-title text-2xl">Recent purchases</h2>
-                        <div className="overflow-x-auto">
-                            <table className="table table-zebra w-full">
-                                <thead>
-                                <tr>
-                                    <th>Invoice #</th>
-                                    <th>Date</th>
-                                    <th>Credits</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>INV-1001</td>
-                                    <td>2024-09-10</td>
-                                    <td>25000</td>
-                                    <td>$50</td>
-                                    <td className="text-success">Paid</td>
-                                    <td><a href="#" className="link">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td>INV-1002</td>
-                                    <td>2024-10-10</td>
-                                    <td>32000</td>
-                                    <td>$60</td>
-                                    <td className="text-warning">Pending</td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
     )

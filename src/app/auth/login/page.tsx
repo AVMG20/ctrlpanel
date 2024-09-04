@@ -2,8 +2,8 @@
 import Link from "next/link";
 import {useFormState} from "react-dom";
 import login, {FieldErrors} from "@/app/auth/login/actions";
-import FormInput from "@/components/form/form-input";
-import SubmitBtn from "@/components/submit-btn";
+import FormInput from "@/components/ui/form/form-input";
+import SubmitBtn from "@/components/ui/form/submit-btn";
 
 export default function Login() {
     const [state, action] = useFormState<FieldErrors, FormData>(login, {});
