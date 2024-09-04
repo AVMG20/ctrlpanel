@@ -24,7 +24,7 @@ function SidebarLink({
     const pathname = usePathname();
     return (
         <li>
-            <Link href={href} className={`${pathname === href ? 'bg-secondary/50' : ''}`}>
+            <Link href={href} className={`${pathname === href ? 'bg-neutral' : ''}`}>
                 <Icon/>
                 {title}
             </Link>

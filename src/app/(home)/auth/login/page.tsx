@@ -1,7 +1,7 @@
 'use client';
 import Link from "next/link";
 import {useFormState} from "react-dom";
-import login, {FieldErrors} from "@/app/auth/login/actions";
+import login, {FieldErrors} from "@/app/(home)/auth/login/actions";
 import FormInput from "@/components/ui/form/form-input";
 import SubmitBtn from "@/components/ui/form/submit-btn";
 

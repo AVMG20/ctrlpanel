@@ -1,4 +1,5 @@
-import React, {HTMLInputTypeAttribute} from 'react';
+'use client';
+import React, {HTMLInputTypeAttribute, useState} from 'react';
 
 interface FormInputProps<> {
     id: string;
@@ -11,6 +12,12 @@ interface FormInputProps<> {
 }
 
 const FormInput: React.FC<FormInputProps> = ({ id, label, value,  errorMessage, placeholder, type, required }) => {
+    const [inputValue, setInputValue] = useState(value);
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value);
+    };
+
     return (
         <div className="form-control mb-3">
             <label className="label" htmlFor={id}>
@@ -20,7 +27,8 @@ const FormInput: React.FC<FormInputProps> = ({ id, label, value,  errorMessage, 
                 id={id}
                 name={id}
                 type={type ? type : 'text'}
-                value={value}
+                value={inputValue}
+                onChange={handleInputChange}
                 placeholder={placeholder}
                 className={`input input-bordered ${errorMessage ? 'input-error' : ''}`}
                 required={required}

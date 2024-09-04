@@ -22,7 +22,7 @@ export default function RootLayout({
                             <Menu/>
                         </label>
                     </div>
-                    <main className={'xl:p-8'}>
+                    <main className={'p-3 md:p-8'}>
                         <div>
                             {children}
                         </div>

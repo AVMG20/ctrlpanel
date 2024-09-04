@@ -4,8 +4,6 @@ import {signInSchema} from "@/auth";
 import {ZodError} from "zod";
 import {signIn} from "@/auth";
 import {AuthError} from "next-auth";
-import { redirect } from 'next/navigation'
-import {revalidatePath} from "next/cache";
 
 export type FieldErrors = {
     message?: string,
