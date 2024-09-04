@@ -43,7 +43,7 @@ const NavigationLinks = ({ session }: {session: Session | null}) => (
                 <button
                     type="button"
                     onClick={() => signOut({ callbackUrl: '/' })}
-                    className="btn btn-ghost w-full text-left"
+                    className="btn btn-ghost"
                 >
                     Sign Out
                 </button>
