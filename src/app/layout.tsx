@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
     return (
         <SessionWrapper>
-            <html lang="en" data-theme="soly">
+            <html lang="en" data-theme="ctrlpanel">
                 <body className={inter.className}>
                 {children}
                 </body>
