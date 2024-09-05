@@ -18,7 +18,6 @@ export default async function login(prevState: FieldErrors, formData: FormData) 
         let data = {
             email: formData.get('email'),
             password: formData.get('password'),
-            username: formData.get('username') ?? 'AVMG'
         }
 
         await signInSchema.parseAsync(data)

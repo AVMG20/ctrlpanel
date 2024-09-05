@@ -11,7 +11,6 @@ export default function Sidebar() {
             <ul className="space-y-1">
                 <SidebarLink href={'/dashboard'} title={'Dashboard'} Icon={Home}/>
                 <SidebarLink href={'/servers'} title={'Servers'} Icon={Server}/>
-                <SidebarLink href={'/store'} title={'Store'} Icon={ShoppingCart}/>
                 <SidebarLink href={'/credits'} title={'Credits'} Icon={Coins}/>
                 <SidebarLink href={'/tickets'} title={'Tickets'} Icon={TicketIcon}/>
             </ul>

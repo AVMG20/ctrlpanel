@@ -39,7 +39,7 @@ const NavigationLinks = ({ session }: {session: Session | null}) => (
         <Link className={'btn btn-ghost'} href={'/store'}>Store</Link>
         {session ? (
             <>
-                <Link className={'btn btn-ghost'} href={'/profile'}>Profile</Link>
+                <Link className={'btn btn-ghost'} href={'/dashboard'}>Dashboard</Link>
                 <button
                     type="button"
                     onClick={() => signOut({ callbackUrl: '/' })}
