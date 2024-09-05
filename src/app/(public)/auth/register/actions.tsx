@@ -19,7 +19,6 @@ export type FieldErrors = {
 } | undefined
 
 export default async function register(prevState: FieldErrors, formData: FormData) {
-    let validated;
     let data = {
         email: formData.get('email'),
         password: formData.get('password'),
@@ -29,13 +28,13 @@ export default async function register(prevState: FieldErrors, formData: FormDat
     }
 
     try {
-        validated = await registerSchema.parseAsync(data)
+        const {email, username, password} = await registerSchema.parseAsync(data)
 
         await prisma.user.create({
             data: {
-                email: validated.email,
-                name: validated.username,
-                password: saltAndHashPassword(validated.password)
+                email: email,
+                name: username,
+                password: saltAndHashPassword(password)
             }});
 
     } catch (error) {

@@ -66,6 +66,27 @@ const config: Config = {
           "--tab-border": "1px", // Border width for tab components
           "--tab-radius": "0.375rem", // Mild rounding for tab corners
         },
+        firestorm: {
+          "primary": "#FF5722",        // Vibrant Orange
+          "secondary": "#212121",      // Deep Charcoal
+          "accent": "#FF9800",         // Amber
+          "neutral": "#1C1C1C",        // Dark Neutral
+          "base-100": "#121212",       // Base Dark
+          "info": "#FF7043",           // Soft Orange
+          "success": "#FFC107",        // Bright Amber
+          "warning": "#FF8F00",        // Bold Amber
+          "error": "#D32F2F",          // Fiery Red
+
+          "--rounded-box": "0.50rem",
+          "--rounded-btn": "0.375rem",
+          "--rounded-badge": "1.5rem",
+          "--animation-btn": "0.25s",
+          "--animation-input": "0.2s",
+          "--btn-focus-scale": "0.97",
+          "--border-btn": "1px",
+          "--tab-border": "1px",
+          "--tab-radius": "0.375rem",
+        }
       },
     ],
   },

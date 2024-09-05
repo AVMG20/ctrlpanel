@@ -39,6 +39,25 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
     session: {
         strategy: "jwt",
     },
+    callbacks: {
+        async jwt({ token, user, account, profile, isNewUser }) {
+            // Initial sign-in: a user object will be available
+            if (user) {
+                token.id = user.id;  //append the user id to the token
+                token.role = user.role //append the user role to the token
+            }
+
+            return token;
+        },
+        async session({ session, token, user }) {
+            if (session.user) {
+                session.user.id = token.id as string //append the user id to the session
+                session.user.role = token.role as string //append the user role to the session
+            }
+
+            return session;
+        },
+    },
     providers: [Discord, CredentialsProvider({
         name: 'Credentials',
         credentials: {
@@ -78,7 +97,8 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
                     id: user.id,
                     name: user.name,
                     email: user.email,
-                    role: 'user'
+                    role: user.role,
+                    image: user.image,
                 }
             } catch (error) {
                 if (error instanceof ZodError) {
