@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react';
-import {twMerge} from "tailwind-merge";
+import React, {ReactNode} from 'react';
+import {ClassNameValue, twMerge} from "tailwind-merge";
 
 interface CardProps {
     title?: string;
-    cardClass?: string;
+    cardClass?: ClassNameValue;
     children: ReactNode;
 }
 

@@ -2,10 +2,9 @@
 
 import {registerSchema} from "@/auth";
 import {ZodError} from "zod";
-import {signIn} from "@/auth";
 import {AuthError} from "next-auth";
 import {prisma} from "@/prisma";
-import {saltAndHashPassword} from "@/utils/password";
+import {saltAndHashPassword} from "@/lib/password";
 import { Prisma } from '@prisma/client'
 
 export type FieldErrors = {

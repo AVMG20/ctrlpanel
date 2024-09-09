@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import Discord from "next-auth/providers/discord"
 import {boolean, object, string, ZodError} from "zod";
 import CredentialsProvider from "next-auth/providers/credentials";
-import {comparePassword} from "@/utils/password";
+import {comparePassword} from "@/lib/password";
 import {PrismaAdapter} from "@auth/prisma-adapter";
 import {prisma} from "@/prisma";
 

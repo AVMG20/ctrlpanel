@@ -3,8 +3,8 @@
 import Link from "next/link";
 import {
     Coins,
-    Home,
-    MonitorCog,
+    Home, LucideMail,
+    MonitorCog, PanelsTopLeft,
     Radio,
     Receipt,
     Server,
@@ -58,7 +58,9 @@ export default function Sidebar() {
                         <SidebarLink href={'/dashboard#'} title={'Server Configs'} Icon={MonitorCog}/>
                         <SidebarLink href={'/dashboard#'} title={'Credit Store'} Icon={ShoppingBasket}/>
                         <SidebarLink href={'/dashboard#'} title={'Vouchers'} Icon={Receipt}/>
-                        <SidebarLink href={'/dashboard#'} title={'Settings'} Icon={Settings}/>
+                        <SidebarLink href={'/dashboard#'} title={'Content'} Icon={PanelsTopLeft}/>
+                        <SidebarLink href={'/dashboard#'} title={'Emails'} Icon={LucideMail}/>
+                        <SidebarLink href={'/admin/settings/general'} title={'Settings'} Icon={Settings}/>
                     </>
                 </Gate>
             </ul>
@@ -89,9 +91,12 @@ function SidebarLink({
     Icon
 }: { href: string, title: string, Icon: any }) {
     const pathname = usePathname();
+    const isActive = pathname.includes(href)
+        || pathname.includes('settings') && href.includes('settings');
+
     return (
         <li>
-            <Link href={href} className={`${pathname === href ? 'bg-base-content/10 border-l-2 border-primary' : ''}`}>
+            <Link href={href} className={`${isActive ? 'bg-base-content/10 border-l-2 border-primary' : ''}`}>
                 <Icon/>
                 {title}
             </Link>

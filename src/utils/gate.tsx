@@ -3,7 +3,6 @@ import React from "react";
 
 export default function Gate({children, roles}: { children: React.ReactNode, roles: string[] | string }) {
     const {data: session} = useSession();
-    console.log(session?.user)
 
     if (!session) return null;
 
