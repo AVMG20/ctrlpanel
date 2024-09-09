@@ -16,7 +16,7 @@ class Settings {
     }
 
     // Get a single setting with type inference
-    async get(code: Code, defaultValue: string|null = null): Promise<string | null> {
+    async get(code: Code, defaultValue: string|null = null): Promise<Code | null> {
         const setting = await prisma.setting.findUnique({
             where: { code },
         });
@@ -24,7 +24,7 @@ class Settings {
     }
 
     // Get multiple settings with type inference
-    async getMultiple(codes: string[]): Promise<Record<string, string>> {
+    async getMultiple(codes: string[]): Promise<Record<Code, string>> {
         const settings = await prisma.setting.findMany({
             where: { code: { in: codes } },
         });
@@ -32,7 +32,7 @@ class Settings {
         return settings.reduce((acc, setting) => {
             acc[setting.code] = setting.value as string;
             return acc;
-        }, {} as Record<string, string>);
+        }, {} as Record<Code, string>);
     }
 
     //Get all settings
@@ -41,7 +41,7 @@ class Settings {
         return settings.reduce((acc, setting) => {
             acc[setting.code] = setting.value as string;
             return acc;
-        }, {} as Record<string, string>);
+        }, {} as Record<Code, string>);
     }
 
     // Save a single setting
