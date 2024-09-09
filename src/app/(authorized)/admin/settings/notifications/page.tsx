@@ -1,10 +1,7 @@
-// app/settings/notifications/page.tsx
 import React from 'react';
 import Card from "@/components/ui/card";
-import {auth} from "@/auth";
 
-export default async function NotificationSettings() {
-    const session = auth();
+export default function NotificationSettings() {
     return (
         <Card>
             <div className="form-control">
