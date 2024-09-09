@@ -1,5 +1,6 @@
 import {prisma} from '@/prisma';
-import {object} from "zod";
+
+export type Code = 'theme' | 'example' | string
 
 class Settings {
     private static instance: Settings;
@@ -15,7 +16,7 @@ class Settings {
     }
 
     // Get a single setting with type inference
-    async get(code: string, defaultValue: string|null = null): Promise<string | null> {
+    async get(code: Code, defaultValue: string|null = null): Promise<string | null> {
         const setting = await prisma.setting.findUnique({
             where: { code },
         });
@@ -35,7 +36,7 @@ class Settings {
     }
 
     //Get all settings
-    async getAll(): Promise<Record<string, string>> {
+    async getAll(): Promise<Record<Code, string>> {
         const settings = await prisma.setting.findMany();
         return settings.reduce((acc, setting) => {
             acc[setting.code] = setting.value as string;
@@ -44,7 +45,7 @@ class Settings {
     }
 
     // Save a single setting
-    async save(code: string, value: string): Promise<void> {
+    async save(code: Code, value: string): Promise<void> {
         await prisma.setting.upsert({
             where: { code },
             update: { value },
@@ -53,7 +54,7 @@ class Settings {
     }
 
     // Save multiple settings
-    async saveMultiple(data: Record<string, string>): Promise<void> {
+    async saveMultiple(data: Record<Code, string>): Promise<void> {
         const upserts = Object.entries(data).map(([code, value]) =>
             prisma.setting.upsert({
                 where: { code },
