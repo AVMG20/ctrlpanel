@@ -3,13 +3,17 @@
 import {object, string, ZodString, ZodError} from "zod";
 import settings from "@/lib/settings";
 
-export type FieldErrors = {
+export type FormState = {
     message?: string,
     success?: boolean
     [key: string]: string[] | string | boolean | undefined
 } | undefined
 
-export default async function saveSettings(prevState: FieldErrors, formData: FormData) {
+const settingsSchema = object({
+    theme: string({required_error: 'Theme is required'}).optional(),
+});
+
+export default async function saveSettings(prevState: FormState, formData: FormData) {
     // get all fields
     let entries: Record<string, string> = {}
 
@@ -19,15 +23,8 @@ export default async function saveSettings(prevState: FieldErrors, formData: For
     }
 
     try {
-        const schema = object(
-            Object.keys(entries).reduce((acc, key) => {
-                acc[key] = string().min(1, `${key} is required`);
-                return acc;
-            }, {} as Record<string, ZodString>)
-        );
-
         // Validate entries
-        schema.parse(entries);
+        settingsSchema.parse(entries);
 
         // Save settings
         await settings.saveMultiple(entries)
@@ -36,7 +33,10 @@ export default async function saveSettings(prevState: FieldErrors, formData: For
             return error.formErrors.fieldErrors
         }
 
-        return {message: 'An error occurred'}
+        return {
+            message: 'An error occurred',
+            success: false
+        }
     }
 
     return {

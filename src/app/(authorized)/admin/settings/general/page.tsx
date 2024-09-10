@@ -3,14 +3,16 @@ import React, {useEffect, useState} from 'react';
 import Card from "@/components/ui/card";
 import SubmitBtn from "@/components/ui/form/submit-btn";
 import {useFormState} from "react-dom";
-import saveSettings, {FieldErrors, getSettings} from "@/app/(authorized)/admin/settings/actions";
+import saveSettings, {FormState, getSettings} from "@/app/(authorized)/admin/settings/actions";
 import SkeletonForm from "@/app/(authorized)/admin/settings/skeleton-form";
 import Tooltip from "@/components/ui/tooltip";
+import {useToast} from "@/components/util/toaster";
 
 export default function NotificationSettings() {
     const [settings, setSettings] = useState({});
     const [loading, setLoading] = useState(true);
-    const [state, action] = useFormState<FieldErrors, FormData>(saveSettings, {});
+    const [state, action] = useFormState<FormState, FormData>(saveSettings, {});
+    const {handleToast} = useToast();
 
     useEffect(() => {
         getSettings().then(data => {
@@ -19,11 +21,18 @@ export default function NotificationSettings() {
         });
     }, [])
 
+    useEffect(() => {
+        handleToast({
+            message: state?.message,
+            success: state?.success
+        });
+    }, [state])
+
     if (loading) return <SkeletonForm/>
 
     return (
         <Card title={'General settings'}>
-        <form action={action}>
+            <form action={action}>
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                     <ThemeSelector settings={settings}/>
                 </div>
@@ -36,7 +45,7 @@ export default function NotificationSettings() {
 }
 
 // simple real-time theme swapper
-function ThemeSelector({settings}: {settings: Record<string, string>}) {
+function ThemeSelector({settings}: { settings: Record<string, string>}) {
     const [theme, setTheme] = useState(settings?.theme);
 
     useEffect(() => {
@@ -45,6 +54,7 @@ function ThemeSelector({settings}: {settings: Record<string, string>}) {
 
     return (
         <div className="form-control">
+
             <label className="label">
                 <span className="label-text">Theme</span>
                 <Tooltip tip={"You need to rebuild the application for these changes to take permanent effect for everyone."}/>

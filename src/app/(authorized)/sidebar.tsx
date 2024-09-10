@@ -26,10 +26,12 @@ export default function Sidebar() {
 
             <ul className="space-y-1">
                 {/* Name and logo */}
-                <Link href={'/'} className="flex items-center space-x-2 mb-5 pb-3 border-b border-b-secondary">
+                <Link href={'/'} className="flex items-center space-x-2">
                     <ShieldHalf className="w-8 h-8 text-primary"/>
                     <h1 className="text-2xl font-bold">CtrlPanel</h1>
                 </Link>
+
+                <div className="divider h-8"></div>
 
                 {/* User links */}
                 <SidebarLink href={'/dashboard'} title={'Dashboard'} Icon={Home}/>
