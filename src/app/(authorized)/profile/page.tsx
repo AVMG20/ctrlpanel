@@ -1,17 +1,18 @@
 import {auth} from "@/auth";
 import PageTitle from "@/components/util/page-title";
 import Card from "@/components/ui/card";
-import {SignOutButton} from "@/app/(authorized)/profile/actions";
 import {Coins} from "lucide-react";
 import React from "react";
+import {EditProfileForm, SignOutButton} from "@/app/(authorized)/profile/forms";
 
 export default async function Page() {
     const session = await auth();
+    if (!session) return null; // there should always be a session here
 
     return (
         <div>
-            <PageTitle title="Profile" description="Edit your profile and settings."/>
-            <div className="flex justify-end mb-5">
+            <div className="flex justify-between items-center flex-wrap mb-5">
+                <PageTitle title="Profile" description="Edit your profile and settings."/>
                 <SignOutButton/>
             </div>
 
@@ -23,12 +24,13 @@ export default async function Page() {
                         <div className="flex items-start space-x-4">
                             <div className="avatar">
                                 <div className="w-12 h-12 rounded-full">
-                                    <img src={session?.user.image ?? "https://via.placeholder.com/150"} alt="Profile Picture"/>
+                                    <img src={session.user.image ?? "https://via.placeholder.com/150"}
+                                         alt="Profile Picture"/>
                                 </div>
                             </div>
                             <div>
-                                <p className="font-semibold text-lg">{session?.user.name}</p>
-                                <p className="font-semibold">{session?.user.email}</p>
+                                <p className="font-semibold text-lg">{session.user.name}</p>
+                                <p className="font-semibold">{session.user.email}</p>
                                 <div className="flex items-center font-bold mt-2">
                                     <Coins className="w-5 h-5 mr-1 text-primary"/>
                                     5000
@@ -79,23 +81,7 @@ export default async function Page() {
 
                 <div className={'gap-5 flex flex-col'}>
                     {/* Edit Profile Form */}
-                    <Card title="Edit profile">
-                        <form>
-                            <div className="form-control mb-4">
-                                <label className="label">
-                                    <span className="label-text">Full Name</span>
-                                </label>
-                                <input type="text" placeholder="Full Name" className="input input-bordered"/>
-                            </div>
-                            <div className="form-control mb-4">
-                                <label className="label">
-                                    <span className="label-text">Email</span>
-                                </label>
-                                <input type="email" placeholder="Email" className="input input-bordered"/>
-                            </div>
-                            <button className="btn btn-primary">Save</button>
-                        </form>
-                    </Card>
+                    <EditProfileForm session={session}/>
 
 
                     {/*Change password*/}
@@ -129,3 +115,4 @@ export default async function Page() {
         </div>
     );
 };
+

@@ -16,7 +16,7 @@ import {
 import {usePathname} from "next/navigation";
 import React from "react";
 import {useSession} from "next-auth/react";
-import Gate from "@/utils/gate";
+import Gate from "@/components/util/gate";
 
 export default function Sidebar() {
     const {data: session} = useSession();

@@ -1,6 +1,7 @@
 'use client';
 
 import React, {createContext, useContext, useState, useCallback, useEffect} from 'react';
+import {BaseFormState} from "@/types";
 
 // Types for toast and context
 interface Toast {
@@ -91,7 +92,7 @@ const Toast: React.FC<{ message: string; type: 'success' | 'info' | 'warning' | 
     );
 };
 
-export const useToastEffect = (state: any) => {
+export const useToastEffect = (state: BaseFormState) => {
     const { handleToast } = useToast();
     useEffect(() => {
         if (state?.message) {

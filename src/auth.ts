@@ -40,11 +40,27 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
         strategy: "jwt",
     },
     callbacks: {
-        async jwt({ token, user, account, profile, isNewUser }) {
+        async jwt({ token, user, account, profile, isNewUser, trigger }) {
             // Initial sign-in: a user object will be available
             if (user) {
                 token.id = user.id;  //append the user id to the token
                 token.role = user.role //append the user role to the token
+            }
+
+            if (trigger === 'update') {
+                // get user from db
+                const user = await prisma.user.findFirst({
+                    where: {
+                        id: token.id as string
+                    }
+                })
+
+                if (!user) return token
+
+                token.role = user.role
+                token.name = user.name
+                token.email = user.email
+                token.picture = user.image
             }
 
             return token;
@@ -76,6 +92,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
         },
         authorize: async (credentials) => {
             try {
+                console.log(1)
                 const {email, password} = await signInSchema.parseAsync(credentials)
 
                 const user = await prisma.user.findFirst({

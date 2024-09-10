@@ -1,14 +1,13 @@
 import PageTitle from "@/components/util/page-title";
 import Card from "@/components/ui/card";
-import {SignOutButton} from "@/app/(authorized)/profile/actions";
 import React from "react";
+import {SignOutButton} from "@/app/(authorized)/profile/forms";
 
-export default async function Page() {
-
+export default function Page() {
     return (
         <div>
-            <PageTitle title="Profile" description="Edit your profile and settings."/>
-            <div className="flex justify-end mb-5">
+            <div className="flex justify-between items-center flex-wrap mb-5">
+                <PageTitle title="Profile" description="Edit your profile and settings."/>
                 <SignOutButton/>
             </div>
 
