@@ -3,15 +3,16 @@ import React, {useEffect, useState} from 'react';
 import Card from "@/components/ui/card";
 import SubmitBtn from "@/components/ui/form/submit-btn";
 import {useFormState} from "react-dom";
-import saveSettings, {FormState, getSettings} from "@/app/(authorized)/admin/settings/actions";
+import saveSettings, {getSettings} from "@/app/(authorized)/admin/settings/actions";
 import SkeletonForm from "@/app/(authorized)/admin/settings/skeleton-form";
 import Tooltip from "@/components/ui/tooltip";
 import useToastEffect from "@/components/util/toaster";
+import {BaseFormState} from "@/types";
 
 export default function NotificationSettings() {
     const [settings, setSettings] = useState({});
     const [loading, setLoading] = useState(true);
-    const [state, action] = useFormState<FormState, FormData>(saveSettings, {});
+    const [state, action] = useFormState<BaseFormState, FormData>(saveSettings, {});
 
     useEffect(() => {
         getSettings().then(data => {

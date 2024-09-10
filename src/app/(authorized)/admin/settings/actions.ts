@@ -2,18 +2,13 @@
 
 import {object, string, ZodString, ZodError} from "zod";
 import settings from "@/lib/settings";
-
-export type FormState = {
-    message?: string,
-    success?: boolean
-    [key: string]: string[] | string | boolean | undefined
-} | undefined
+import {BaseFormState} from "@/types";
 
 const settingsSchema = object({
     theme: string({required_error: 'Theme is required'}).optional(),
 });
 
-export default async function saveSettings(prevState: FormState, formData: FormData) {
+export default async function saveSettings(prevState: BaseFormState, formData: FormData) {
     // get all fields
     let entries: Record<string, string> = {}
 

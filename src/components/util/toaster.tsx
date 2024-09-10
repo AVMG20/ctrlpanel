@@ -101,7 +101,7 @@ export const useToastEffect = (state: BaseFormState) => {
                 success: state.success,
             });
         }
-    }, [state, handleToast]);
+    }, [state]);
 };
 
 export default useToastEffect;

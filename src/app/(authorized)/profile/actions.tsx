@@ -11,8 +11,8 @@ export async function editProfile(prevState: BaseFormState, formData: FormData) 
     // validate data
     const {success, data, error} = z.object({
         id: z.string(),
-        name: z.string().min(3),
-        email: z.string().email()
+        name: z.string().min(3, 'Name must be at least 3 characters'),
+        email: z.string().email('Invalid email')
     }).safeParse(getFormDataEntries(formData));
 
     if (!success) return error.formErrors.fieldErrors
