@@ -6,13 +6,12 @@ import {useFormState} from "react-dom";
 import saveSettings, {FormState, getSettings} from "@/app/(authorized)/admin/settings/actions";
 import SkeletonForm from "@/app/(authorized)/admin/settings/skeleton-form";
 import Tooltip from "@/components/ui/tooltip";
-import {useToast} from "@/components/util/toaster";
+import useToastEffect from "@/components/util/toaster";
 
 export default function NotificationSettings() {
     const [settings, setSettings] = useState({});
     const [loading, setLoading] = useState(true);
     const [state, action] = useFormState<FormState, FormData>(saveSettings, {});
-    const {handleToast} = useToast();
 
     useEffect(() => {
         getSettings().then(data => {
@@ -21,12 +20,7 @@ export default function NotificationSettings() {
         });
     }, [])
 
-    useEffect(() => {
-        handleToast({
-            message: state?.message,
-            success: state?.success
-        });
-    }, [state])
+    useToastEffect(state);
 
     if (loading) return <SkeletonForm/>
 

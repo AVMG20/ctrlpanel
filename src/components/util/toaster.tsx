@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, {createContext, useContext, useState, useCallback, useEffect} from 'react';
 
 // Types for toast and context
 interface Toast {
@@ -90,3 +90,18 @@ const Toast: React.FC<{ message: string; type: 'success' | 'info' | 'warning' | 
         </div>
     );
 };
+
+export const useToastEffect = (state: any) => {
+    const { handleToast } = useToast();
+    useEffect(() => {
+        if (state?.message) {
+            handleToast({
+                message: state.message,
+                success: state.success,
+            });
+        }
+    }, [state, handleToast]);
+};
+
+export default useToastEffect;
+
