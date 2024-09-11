@@ -45,7 +45,7 @@ export default function Sidebar() {
                         <div className="divider py-5 text-sm">
                             Moderation
                         </div>
-                        <SidebarLink href={'/dashboard#'} title={'Users'} Icon={Users}/>
+                        <SidebarLink href={'/admin/users'} title={'Users'} Icon={Users}/>
                         <SidebarLink href={'/dashboard#'} title={'Servers'} Icon={Server}/>
                         <SidebarLink href={'/dashboard#'} title={'Tickets'} Icon={Tickets}/>
                     </>
