@@ -6,11 +6,12 @@ import Card from "@/components/ui/card";
 import {fetchSimpleTableData} from "@/lib/actions/datatable/actions";
 import {PrismaClient} from "@prisma/client";
 import {useQuery} from "@/lib/hooks/use-query";
+import {ucFirst} from "@/utils/util";
 
 interface DataTableProps<T> {
     title: string; // Table title
     model: keyof PrismaClient; // Model name passed as a prop
-    columns: (keyof T)[]; // Columns to display
+    columns: string[]; // Columns to display
     searchFields: string[]; // Fields to search on
     actions?: React.ReactNode; // Additional actions
 }
@@ -93,11 +94,11 @@ export default function DataTable<T>({
                     <tr>
                         {columns.map((col) => (
                             <th
-                                key={String(col)}
-                                onClick={() => handleSort(String(col))}
+                                key={col}
+                                onClick={() => handleSort(col)}
                                 className="cursor-pointer"
                             >
-                                {String(col)} {sortBy === String(col) ? (
+                                {ucFirst(col)} {sortBy === col ? (
                                 order === "asc" ? "↑" : "↓"
                             ) : ""}
                             </th>
@@ -109,39 +110,58 @@ export default function DataTable<T>({
                     <tbody>
                     {data?.data?.map((row: any) => (
                         <tr key={row.id}>
+
+                            {/* Values */}
                             {columns.map((col) => (
-                                <td key={String(col)}>{String(row[col])}</td>
+                                <td key={col}>{row[col]}</td>
                             ))}
+
                             {/* Action buttons */}
-                            <td>
-                                {actions}
-                            </td>
+                            <td className="w-44 text-right">{actions}</td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
             </div>
 
-                {/* Pagination Controls */}
-                <div className="flex justify-between mt-4">
-                    <button className="btn" onClick={() => handlePagination(page - 1)} disabled={page <= 1}>
+            {/* Pagination Controls */}
+            <div className="flex items-center justify-between mt-6 p-3">
+
+
+                {/* Page Info */}
+                <div className="text-left">
+                    <span className="text-md text-base-content/60">
+                        Page <span className="font-bold">{page}</span> of <span className="font-bold">{Math.ceil((data?.totalCount ?? 0) / limit)}</span>
+                    </span>
+                    <div className="text-sm text-base-content/60">
+                        Showing: <span className="font-bold">{limit}</span> of <span className="font-bold">{data?.totalCount ?? 0} </span>
+                    </div>
+
+                </div>
+
+                <div className={'flex gap-3'}>
+                    {/* Previous Button */}
+                    <button
+                        className="btn px-6 py-2 rounded-lg"
+                        onClick={() => handlePagination(page - 1)}
+                        disabled={page <= 1}
+                    >
                         Previous
                     </button>
-                    <span>Page {page}</span>
-                    {page * limit < (
-                        data?.totalCount ?? 0
-                    ) && (
-                        <button
-                            className="btn"
-                            onClick={() => handlePagination(page + 1)}
-                            disabled={page * limit >= (
-                                data?.totalCount ?? 0
-                            )}
-                        >
-                            Next
-                        </button>
-                    )}
+
+                    {/* Next Button */}
+                    <button
+                        className="btn px-6 py-2 rounded-lg"
+                        onClick={() => handlePagination(page + 1)}
+                        disabled={page * limit >= (
+                            data?.totalCount ?? 0
+                        )}
+                    >
+                        Next
+                    </button>
                 </div>
+            </div>
+
         </Card>
-);
+    );
 }
