@@ -134,7 +134,7 @@ export default function DataTable<T>({
                         Page <span className="font-bold">{page}</span> of <span className="font-bold">{Math.ceil((data?.totalCount ?? 0) / limit)}</span>
                     </span>
                     <div className="text-sm text-base-content/60">
-                        Showing: <span className="font-bold">{limit}</span> of <span className="font-bold">{data?.totalCount ?? 0} </span>
+                        Showing: <span className="font-bold">{limit > data?.totalCount ?? 0 ? data?.totalCount ?? 0 : limit}</span> of <span className="font-bold">{data?.totalCount ?? 0} </span>
                     </div>
 
                 </div>
