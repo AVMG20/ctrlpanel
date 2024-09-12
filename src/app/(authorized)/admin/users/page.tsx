@@ -2,6 +2,8 @@ import PageTitle from "@/components/util/page-title";
 import {prisma} from "@/prisma";
 import UsersTable from "@/app/(authorized)/admin/users/table";
 import type {Metadata} from "next";
+import {Suspense} from "react";
+import DataTableSkeleton from "@/components/ui/table/data-table-skeleton";
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 60 seconds.
@@ -29,7 +31,9 @@ export default async function UsersPage() {
     return (
         <div>
             <PageTitle title={"Users"} description={"Manage users in the system"}/>
-            <UsersTable data={data} />
+            <Suspense fallback={<DataTableSkeleton/>}>
+                <UsersTable data={data} />
+            </Suspense>
         </div>
     )
 }
