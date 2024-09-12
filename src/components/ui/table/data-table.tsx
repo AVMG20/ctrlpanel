@@ -14,7 +14,7 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {ArrowUpDown, ChevronDown, MoreHorizontal} from "lucide-react"
+import {ArrowUpDown, ChevronDown, ChevronFirst, ChevronLast, MoreHorizontal} from "lucide-react"
 import Card from "@/components/ui/card";
 
 interface DataTableProps<TData, TValue> {
@@ -83,7 +83,8 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                                     return (
                                         <li key={column.id}>
                                             <label className="label cursor-pointer">
-                                                <span className="label-text">{typeof column.columnDef.header == 'string' ? column.columnDef.header : column.id}</span>
+                                                <span
+                                                    className="label-text">{typeof column.columnDef.header == 'string' ? column.columnDef.header : column.id}</span>
                                                 <input
                                                     type="checkbox"
                                                     className="checkbox"
@@ -102,27 +103,27 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
             <div className="overflow-x-auto">
                 <table className="table table-sm">
                     <thead>
-                        {table.getHeaderGroups()
-                            .map((headerGroup) => (
-                                <tr key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <th key={header.id}>
-                                            {header.isPlaceholder ? null : (
-                                                <>
-                                                    {header.column.getCanSort() ? (
-                                                        <button
-                                                            className="btn flex-nowrap flex btn-sm btn-ghost"
-                                                            onClick={() => header.column.toggleSorting(header.column.getIsSorted() === "asc")}
-                                                        >
-                                                            {flexRender(header.column.columnDef.header, header.getContext())}
+                    {table.getHeaderGroups()
+                        .map((headerGroup) => (
+                            <tr key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <th key={header.id}>
+                                        {header.isPlaceholder ? null : (
+                                            <>
+                                                {header.column.getCanSort() ? (
+                                                    <button
+                                                        className="btn flex-nowrap flex btn-sm btn-ghost"
+                                                        onClick={() => header.column.toggleSorting(header.column.getIsSorted() === "asc")}
+                                                    >
+                                                        {flexRender(header.column.columnDef.header, header.getContext())}
 
-                                                            {header.column.getIsSorted() === "asc" && (
-                                                                <ChevronDown className="ml-1 h-4 w-4"/>
-                                                            )}
-                                                            {header.column.getIsSorted() === "desc" && (
-                                                                <ChevronDown className="ml-1 h-4 w-4 rotate-180"/>
-                                                            )}
-                                                            {header.column.getIsSorted() === false && (
+                                                        {header.column.getIsSorted() === "asc" && (
+                                                            <ChevronDown className="ml-1 h-4 w-4"/>
+                                                        )}
+                                                        {header.column.getIsSorted() === "desc" && (
+                                                            <ChevronDown className="ml-1 h-4 w-4 rotate-180"/>
+                                                        )}
+                                                        {header.column.getIsSorted() === false && (
                                                                 <ArrowUpDown className="ml-1 h-4 w-4"/>
                                                             )}
                                                         </button>
@@ -177,8 +178,9 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                         <button
                             className="btn btn-outline btn-sm"
                             onClick={() => table.firstPage()}
+                            disabled={!table.getCanPreviousPage()}
                         >
-                            &lt;|
+                            <ChevronFirst/>
                         </button>
                         <button
                             className="btn btn-outline btn-sm"
@@ -200,8 +202,9 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                         <button
                             className="btn btn-outline btn-sm"
                             onClick={() => table.lastPage()}
+                            disabled={!table.getCanNextPage()}
                         >
-                            &gt;|
+                            <ChevronLast/>
                         </button>
                     </div>
                 </div>
