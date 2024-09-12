@@ -2,10 +2,10 @@ import PageTitle from "@/components/util/page-title";
 
 export default async function Page() {
     const packages = [
-        { id: 1, credits: 100, price: 10, image: "https://via.placeholder.com/100", description: "Ideal for beginners" },
-        { id: 2, credits: 500, price: 45, image: "https://via.placeholder.com/100", description: "Great value for growing projects" },
-        { id: 3, credits: 1000, price: 85, image: "https://via.placeholder.com/100", description: "Best value for scaling" },
-        { id: 4, credits: 5000, price: 400, image: "https://via.placeholder.com/100", description: "Perfect for enterprise use" },
+        { id: 1, credits: 100, price: 10, image: "https://placehold.co/100", description: "Ideal for beginners" },
+        { id: 2, credits: 500, price: 45, image: "https://placehold.co/100", description: "Great value for growing projects" },
+        { id: 3, credits: 1000, price: 85, image: "https://placehold.co/100", description: "Best value for scaling" },
+        { id: 4, credits: 5000, price: 400, image: "https://placehold.co/100", description: "Perfect for enterprise use" },
     ];
 
     return (

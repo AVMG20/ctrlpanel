@@ -24,7 +24,7 @@ export default async function Page() {
                         <div className="flex items-start space-x-4">
                             <div className="avatar">
                                 <div className="w-12 h-12 rounded-full">
-                                    <img src={session.user.image ?? "https://via.placeholder.com/150"}
+                                    <img src={session.user.image ?? "https://placehold.co/150"}
                                          alt="Profile Picture"/>
                                 </div>
                             </div>

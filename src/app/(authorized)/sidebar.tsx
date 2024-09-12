@@ -71,7 +71,7 @@ export default function Sidebar() {
                       className="card flex flex-row p-5 items-center space-x-3 bg-base-200 hover:bg-base-content/10 transition">
                     <div className="avatar">
                         <div className="w-12 h-12 rounded-full">
-                            <img src={session?.user?.image ?? "https://via.placeholder.com/150"} alt="Profile Picture"/>
+                            <img src={session?.user?.image ?? "https://placehold.co/150"} alt="Profile Picture"/>
                         </div>
                     </div>
                     <div>
