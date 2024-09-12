@@ -176,6 +176,12 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                     <div className="space-x-2 flex items-center">
                         <button
                             className="btn btn-outline btn-sm"
+                            onClick={() => table.firstPage()}
+                        >
+                            &lt;|
+                        </button>
+                        <button
+                            className="btn btn-outline btn-sm"
                             onClick={() => table.previousPage()}
                             disabled={!table.getCanPreviousPage()}
                         >
@@ -190,6 +196,12 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                             disabled={!table.getCanNextPage()}
                         >
                             Next
+                        </button>
+                        <button
+                            className="btn btn-outline btn-sm"
+                            onClick={() => table.lastPage()}
+                        >
+                            &gt;|
                         </button>
                     </div>
                 </div>
