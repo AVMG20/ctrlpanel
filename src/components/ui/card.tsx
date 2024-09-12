@@ -10,7 +10,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ title, cardClass,  children }) => {
     return (
         <div className={"card shadow bg-base-100 w-full h-fit " + twMerge(cardClass)}>
-            <div className="card-body">
+            <div className="card-body p-5 sm:p-8">
                 {title && (
                     <div className="card-title">{title}</div>
                 )}

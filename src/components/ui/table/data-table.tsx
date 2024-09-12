@@ -1,167 +1,200 @@
-"use client";
+"use client"
 
-import {useEffect, useState} from "react";
-import {useRouter, useSearchParams} from "next/navigation";
+import * as React from "react"
+import {
+    ColumnDef,
+    ColumnFiltersState,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    PaginationState,
+    SortingState,
+    useReactTable,
+    VisibilityState,
+} from "@tanstack/react-table"
+import {ArrowUpDown, ChevronDown, MoreHorizontal} from "lucide-react"
 import Card from "@/components/ui/card";
-import {fetchSimpleTableData} from "@/lib/actions/datatable/actions";
-import {PrismaClient} from "@prisma/client";
-import {useQuery} from "@/lib/hooks/use-query";
-import {ucFirst} from "@/utils/util";
 
-interface DataTableProps<T> {
-    title: string; // Table title
-    model: keyof PrismaClient; // Model name passed as a prop
-    columns: string[]; // Columns to display
-    searchFields: string[]; // Fields to search on
-    actions?: React.ReactNode; // Additional actions
+interface DataTableProps<TData, TValue> {
+    title: string,
+    columns: ColumnDef<TData, TValue>[]
+    data: TData[]
+    visibilityState?: VisibilityState
 }
 
-export default function DataTable<T>({
-    title,
-    model,
-    columns,
-    searchFields,
-    actions,
-}: DataTableProps<T>) {
-    const router = useRouter();
-    const params = useSearchParams();
-    const [isLoading, setIsLoading] = useState(false);
+export function DataTable<TData, TValue>({title, columns, data, visibilityState = {id: false}}: DataTableProps<TData, TValue>) {
+    const [sorting, setSorting] = React.useState<SortingState>([])
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(visibilityState)
+    const [rowSelection, setRowSelection] = React.useState({})
+    const [globalFilter, setGlobalFilter] = React.useState('')
+    const [pagination, setPagination] = React.useState<PaginationState>({
+        pageIndex: 0,
+        pageSize: 10,
+    })
 
-    // Extract parameters from URL or use defaults
-    const page = params.get("page") ? parseInt(params.get("page")!) : 1;
-    const limit = params.get("limit") ? parseInt(params.get("limit")!) : 10;
-    const search = params.get("search") || "";
-    const sortBy = params.get("sortBy") || "id";
-    const order = params.get("order") == 'asc' ? 'asc' : 'desc';
-
-    // Fetch data using the useQuery hook
-    let {data, status, execute} = useQuery(() => fetchSimpleTableData({
-        model,
-        page,
-        limit,
-        search,
-        sortBy,
-        order,
-        searchFields, // Pass the dynamic search fields
-    }));
-
-    useEffect(() => {
-        execute()
-            .then(() => {
-                setIsLoading(false);
-            })
-    }, [page, limit, search, sortBy, order]);
-
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true)
-        const searchValue = (e.target as HTMLFormElement).search.value;
-        router.push(`?search=${searchValue}&page=1&limit=${limit}&sortBy=${sortBy}&order=${order}`);
-    };
-
-    const handleSort = (column: string) => {
-        const newOrder = order === "asc" ? "desc" : "asc";
-        setIsLoading(true)
-        router.push(`?search=${search}&page=${page}&limit=${limit}&sortBy=${column}&order=${newOrder}`);
-    };
-
-    const handlePagination = (newPage: number) => {
-        setIsLoading(true)
-        router.push(`?search=${search}&page=${newPage}&limit=${limit}&sortBy=${sortBy}&order=${order}`);
-    };
+    const table = useReactTable({
+        data,
+        columns,
+        enableHiding: true,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        onGlobalFilterChange: setGlobalFilter,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        onPaginationChange: setPagination,
+        state: {
+            sorting,
+            pagination,
+            columnFilters,
+            columnVisibility,
+            rowSelection,
+            globalFilter,
+        },
+    })
 
     return (
         <Card title={title}>
-            {/* Search Form */}
-
-            <form onSubmit={handleSearch} className="mb-4 flex gap-3">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 py-4">
                 <input
                     type="text"
-                    name="search"
-                    defaultValue={search}
                     placeholder="Search..."
-                    className="input input-bordered w-full max-w-xs"
+                    value={globalFilter ?? ""}
+                    onChange={(e) => setGlobalFilter(e.target.value)}
+                    className="input input-bordered w-full sm:max-w-xs"
                 />
-                <button type="submit" className="btn">
-                    Search
-                </button>
-            </form>
+
+                <div className="">
+                    <div className="dropdown flex dropdown-end">
+                        <label tabIndex={0} className="btn w-full sm:w-auto">
+                            Columns <ChevronDown className="ml-2 h-4 w-4"/>
+                        </label>
+                        <ul tabIndex={0} className="dropdown-content menu z-10 p-2 shadow bg-base-100 rounded-box w-52">
+                            {table
+                                .getAllColumns()
+                                .filter((column) => column.getCanHide())
+                                .map((column) => {
+                                    return (
+                                        <li key={column.id}>
+                                            <label className="label cursor-pointer">
+                                                <span className="label-text">{typeof column.columnDef.header == 'string' ? column.columnDef.header : column.id}</span>
+                                                <input
+                                                    type="checkbox"
+                                                    className="checkbox"
+                                                    checked={column.getIsVisible()}
+                                                    onChange={(e) => column.toggleVisibility(e.target.checked)}
+                                                />
+                                            </label>
+                                        </li>
+                                    )
+                                })}
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
             <div className="overflow-x-auto">
-                {/* Table */}
-                <table className={`table w-full ${status === 'loading' || isLoading ? "skeleton opacity-25" : ""}`}>
+                <table className="table table-sm">
                     <thead>
-                    <tr>
-                        {columns.map((col) => (
-                            <th
-                                key={col}
-                                onClick={() => handleSort(col)}
-                                className="cursor-pointer"
-                            >
-                                {ucFirst(col)} {sortBy === col ? (
-                                order === "asc" ? "↑" : "↓"
-                            ) : ""}
-                            </th>
-                        ))}
-                        {/* Actions column */}
-                        <th>Actions</th>
-                    </tr>
+                        {table.getHeaderGroups()
+                            .map((headerGroup) => (
+                                <tr key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => (
+                                        <th key={header.id}>
+                                            {header.isPlaceholder ? null : (
+                                                <>
+                                                    {header.column.getCanSort() ? (
+                                                        <button
+                                                            className="btn flex-nowrap flex btn-sm btn-ghost"
+                                                            onClick={() => header.column.toggleSorting(header.column.getIsSorted() === "asc")}
+                                                        >
+                                                            {flexRender(header.column.columnDef.header, header.getContext())}
+
+                                                            {header.column.getIsSorted() === "asc" && (
+                                                                <ChevronDown className="ml-1 h-4 w-4"/>
+                                                            )}
+                                                            {header.column.getIsSorted() === "desc" && (
+                                                                <ChevronDown className="ml-1 h-4 w-4 rotate-180"/>
+                                                            )}
+                                                            {header.column.getIsSorted() === false && (
+                                                                <ArrowUpDown className="ml-1 h-4 w-4"/>
+                                                            )}
+                                                        </button>
+                                                    ) : (
+                                                        flexRender(header.column.columnDef.header, header.getContext())
+                                                    )}
+                                                </>
+                                            )}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ))}
                     </thead>
                     <tbody>
-                    {data?.data?.map((row: any) => (
-                        <tr key={row.id}>
-
-                            {/* Values */}
-                            {columns.map((col) => (
-                                <td key={col}>{row[col]}</td>
-                            ))}
-
-                            {/* Action buttons */}
-                            <td className="w-44 text-right">{actions}</td>
+                    {table.getRowModel().rows.length ? (
+                        table.getRowModel()
+                            .rows
+                            .map((row) => (
+                                <tr key={row.id} className={row.getIsSelected() ? "selected" : ""}>
+                                    {row.getVisibleCells()
+                                        .map((cell) => (
+                                            <td key={cell.id}>{flexRender(cell.column.columnDef.cell,
+                                                cell.getContext())}</td>
+                                        ))}
+                                </tr>
+                            ))
+                    ) : (
+                        <tr>
+                        <td colSpan={columns.length} className="text-center">
+                                No results.
+                            </td>
                         </tr>
-                    ))}
+                    )}
                     </tbody>
                 </table>
             </div>
 
-            {/* Pagination Controls */}
-            <div className="flex items-center justify-between mt-6 p-3">
-
-
-                {/* Page Info */}
-                <div className="text-left">
-                    <span className="text-md text-base-content/60">
-                        Page <span className="font-bold">{page}</span> of <span className="font-bold">{Math.ceil((data?.totalCount ?? 0) / limit)}</span>
-                    </span>
-                    <div className="text-sm text-base-content/60">
-                        Showing: <span className="font-bold">{limit > data?.totalCount ?? 0 ? data?.totalCount ?? 0 : limit}</span> of <span className="font-bold">{data?.totalCount ?? 0} </span>
-                    </div>
-
+            <div className="flex items-center justify-between space-x-2 py-4">
+                <div className="text-sm text-base-content/50">
+                    {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
+                    selected.
                 </div>
 
-                <div className={'flex gap-3'}>
-                    {/* Previous Button */}
-                    <button
-                        className="btn px-6 py-2 rounded-lg"
-                        onClick={() => handlePagination(page - 1)}
-                        disabled={page <= 1}
-                    >
-                        Previous
-                    </button>
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 items-center">
+                    <div className="flex gap-1 text-sm text-base-content/50">
+                        <span>Page</span>
+                        <strong>{table.getState().pagination.pageIndex + 1} of{' '}{table.getPageCount()
+                            .toLocaleString()}</strong>
+                    </div>
 
-                    {/* Next Button */}
-                    <button
-                        className="btn px-6 py-2 rounded-lg"
-                        onClick={() => handlePagination(page + 1)}
-                        disabled={page * limit >= (
-                            data?.totalCount ?? 0
-                        )}
-                    >
-                        Next
-                    </button>
+                    <div className="space-x-2 flex items-center">
+                        <button
+                            className="btn btn-outline btn-sm"
+                            onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}
+                        >
+                            Previous
+                        </button>
+                        <button
+                            className="btn btn-outline btn-sm"
+                            onClick={() => {
+                                table.nextPage();
+                                console.log(1)
+                            }}
+                            disabled={!table.getCanNextPage()}
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
             </div>
 
         </Card>
-    );
+    )
 }
