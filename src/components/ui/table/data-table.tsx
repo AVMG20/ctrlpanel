@@ -14,7 +14,15 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {ArrowUpDown, ChevronDown, ChevronFirst, ChevronLast, MoreHorizontal} from "lucide-react"
+import {
+    ArrowUpDown,
+    ChevronDown,
+    ChevronFirst,
+    ChevronLast,
+    ChevronLeft,
+    ChevronRight,
+    MoreHorizontal
+} from "lucide-react"
 import Card from "@/components/ui/card";
 
 interface DataTableProps<TData, TValue> {
@@ -187,7 +195,7 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                             onClick={() => table.previousPage()}
                             disabled={!table.getCanPreviousPage()}
                         >
-                            Previous
+                            <ChevronLeft/>
                         </button>
                         <button
                             className="btn btn-outline btn-sm"
@@ -197,7 +205,7 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                             }}
                             disabled={!table.getCanNextPage()}
                         >
-                            Next
+                            <ChevronRight/>
                         </button>
                         <button
                             className="btn btn-outline btn-sm"
