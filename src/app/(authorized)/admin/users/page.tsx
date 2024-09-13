@@ -31,9 +31,9 @@ export default async function UsersPage() {
     return (
         <div>
             <PageTitle title={"Users"} description={"Manage users in the system"}/>
-            <Suspense fallback={<DataTableSkeleton/>}>
+            {/*<Suspense fallback={<DataTableSkeleton/>}>*/}
                 <UsersTable data={data} />
-            </Suspense>
+            {/*</Suspense>*/}
         </div>
     )
 }
