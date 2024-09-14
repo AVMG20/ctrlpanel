@@ -132,7 +132,7 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                                                             <ChevronDown className="ml-1 h-4 w-4 rotate-180"/>
                                                         )}
                                                         {header.column.getIsSorted() === false && (
-                                                                <ArrowUpDown className="ml-1 h-4 w-4"/>
+                                                            <ArrowUpDown className="ml-1 h-4 w-4"/>
                                                             )}
                                                         </button>
                                                     ) : (
@@ -183,6 +183,35 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                     </div>
 
                     <div className="space-x-2 flex items-center">
+                        <div className="dropdown flex dropdown-end">
+                            <label tabIndex={0} className="btn btn-outline btn-sm w-full sm:w-auto">
+                                Page size {table.getState().pagination.pageSize} <ChevronDown className="ml-2 h-4 w-4"/>
+                            </label>
+                            <ul tabIndex={0}
+                                className="dropdown-content menu z-10 p-2 shadow bg-base-100 rounded-box w-52">
+                                {[10, 20, 50, 100]
+                                    .map((pageSize) => {
+                                        return (
+                                            <li key={pageSize}>
+                                                <label className="label cursor-pointer">
+                                                <span
+                                                    className="label-text">{pageSize}</span>
+                                                    <input
+                                                        type="checkbox"
+                                                        className="checkbox"
+                                                        checked={pageSize == table.getState().pagination.pageSize}
+                                                        onChange={(e) => {
+                                                            e.target.blur();
+                                                            table.setPageSize(pageSize);
+                                                        }}
+                                                    />
+                                                </label>
+                                            </li>
+                                        )
+                                    })}
+                            </ul>
+                        </div>
+
                         <button
                             className="btn btn-outline btn-sm"
                             onClick={() => table.firstPage()}
