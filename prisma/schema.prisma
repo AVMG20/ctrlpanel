@@ -28,6 +28,7 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Ticket    Ticket[]
 }
 
 model Account {
@@ -78,4 +79,17 @@ model Authenticator {
 model Setting {
   code  String @id
   value String
+}
+
+model Ticket {
+  ticketId    Int       @id @default(autoincrement())
+  userId      String
+  title       String
+  priority    String
+  status      String
+  description String    @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt()
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
