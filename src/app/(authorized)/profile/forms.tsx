@@ -18,6 +18,7 @@ export function EditProfileForm({session} : { session: Session }) {
     useToastEffect(state)
 
     //we need this to update the session data.
+    //we only need this cuss we edit user data
     useEffect(() => {
         if (state.success) {
             update({username: 'username'}).then(async data => {
