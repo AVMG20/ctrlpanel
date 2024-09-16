@@ -5,6 +5,7 @@ import { prisma } from '@/prisma';
 import { z } from 'zod';
 import { getFormDataEntries } from '@/utils/util';
 import {auth} from "@/auth";
+import {revalidatePath} from "next/cache";
 
 export async function createTicket(prevState: BaseFormState, formData: FormData) {
     const session = await auth();
@@ -38,6 +39,9 @@ export async function createTicket(prevState: BaseFormState, formData: FormData)
         console.error(err);
         return { message: 'An error occurred while creating the ticket' };
     }
+
+    //revalidate path
+    revalidatePath('/tickets');
 
     // Return a success message
     return {
