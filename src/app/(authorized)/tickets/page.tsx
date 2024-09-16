@@ -20,6 +20,14 @@ export default async function Page() {
             status: true,
             priority: true,
         },
+        orderBy: [
+            {
+                status: 'asc',
+            },
+            {
+                createdAt: 'desc',
+            }
+        ]
     });
 
     return (
