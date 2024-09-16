@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                     className="input input-bordered w-full sm:max-w-xs"
                 />
 
-                <div className="">
+                <div>
                     <div className="dropdown flex dropdown-end">
                         <label tabIndex={0} className="btn w-full sm:w-auto">
                             Columns <ChevronDown className="ml-2 h-4 w-4"/>
@@ -123,7 +123,8 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                                                         className="btn flex-nowrap flex btn-sm btn-ghost"
                                                         onClick={() => header.column.toggleSorting(header.column.getIsSorted() === "asc")}
                                                     >
-                                                        {flexRender(header.column.columnDef.header, header.getContext())}
+                                                        {flexRender(header.column.columnDef.header,
+                                                            header.getContext())}
 
                                                         {header.column.getIsSorted() === "asc" && (
                                                             <ChevronDown className="ml-1 h-4 w-4"/>
@@ -133,7 +134,7 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                                                         )}
                                                         {header.column.getIsSorted() === false && (
                                                             <ArrowUpDown className="ml-1 h-4 w-4"/>
-                                                            )}
+                                                        )}
                                                         </button>
                                                     ) : (
                                                         flexRender(header.column.columnDef.header, header.getContext())
@@ -169,80 +170,84 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                 </table>
             </div>
 
-            <div className="flex items-center justify-between space-x-2 py-4">
-                <div className="text-sm text-base-content/50">
-                    {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
-                    selected.
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 items-center">
-                    <div className="flex gap-1 text-sm text-base-content/50">
-                        <span>Page</span>
-                        <strong>{table.getState().pagination.pageIndex + 1} of{' '}{table.getPageCount()
-                            .toLocaleString()}</strong>
-                    </div>
-
-                    <div className="space-x-2 flex items-center">
-                        <div className="dropdown flex dropdown-end">
-                            <label tabIndex={0} className="btn btn-outline btn-sm w-full sm:w-auto">
-                                Page size {table.getState().pagination.pageSize} <ChevronDown className="ml-2 h-4 w-4"/>
-                            </label>
-                            <ul tabIndex={0}
-                                className="dropdown-content menu z-10 p-2 shadow bg-base-100 rounded-box w-52">
-                                {[10, 20, 50, 100]
-                                    .map((pageSize) => {
-                                        return (
-                                            <li key={pageSize}>
-                                                <label className="label cursor-pointer">
+            <div>
+                <div className="flex justify-end">
+                    <div className="dropdown flex dropdown-end">
+                        <label tabIndex={0} className="btn btn-sm w-full sm:w-auto">
+                            Page size {table.getState().pagination.pageSize} <ChevronDown className="ml-2 h-4 w-4"/>
+                        </label>
+                        <ul tabIndex={0}
+                            className="dropdown-content menu z-10 p-2 shadow bg-base-100 rounded-box w-52">
+                            {[10, 20, 50, 100]
+                                .map((pageSize) => {
+                                    return (
+                                        <li key={pageSize}>
+                                            <label className="label cursor-pointer">
                                                 <span
                                                     className="label-text">{pageSize}</span>
-                                                    <input
-                                                        type="checkbox"
-                                                        className="checkbox"
-                                                        checked={pageSize == table.getState().pagination.pageSize}
-                                                        onChange={(e) => {
-                                                            e.target.blur();
-                                                            table.setPageSize(pageSize);
-                                                        }}
-                                                    />
-                                                </label>
-                                            </li>
-                                        )
-                                    })}
-                            </ul>
+                                                <input
+                                                    type="checkbox"
+                                                    className="checkbox"
+                                                    checked={pageSize == table.getState().pagination.pageSize}
+                                                    onChange={(e) => {
+                                                        e.target.blur();
+                                                        table.setPageSize(pageSize);
+                                                    }}
+                                                />
+                                            </label>
+                                        </li>
+                                    )
+                                })}
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between space-x-2 py-4">
+                    <div className="text-sm text-base-content/50">
+                        {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
+                        selected.
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 items-center">
+                        <div className="flex gap-1 text-sm text-base-content/50">
+                            <span>Page</span>
+                            <strong>{table.getState().pagination.pageIndex + 1} of{' '}{table.getPageCount()
+                                .toLocaleString()}</strong>
                         </div>
 
-                        <button
-                            className="btn btn-outline btn-sm"
-                            onClick={() => table.firstPage()}
-                            disabled={!table.getCanPreviousPage()}
-                        >
-                            <ChevronFirst/>
-                        </button>
-                        <button
-                            className="btn btn-outline btn-sm"
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                        >
-                            <ChevronLeft/>
-                        </button>
-                        <button
-                            className="btn btn-outline btn-sm"
-                            onClick={() => {
-                                table.nextPage();
-                                console.log(1)
-                            }}
-                            disabled={!table.getCanNextPage()}
-                        >
-                            <ChevronRight/>
-                        </button>
-                        <button
-                            className="btn btn-outline btn-sm"
-                            onClick={() => table.lastPage()}
-                            disabled={!table.getCanNextPage()}
-                        >
-                            <ChevronLast/>
-                        </button>
+                        <div className="space-x-2 flex items-center">
+                            <button
+                                className="btn btn-sm"
+                                onClick={() => table.firstPage()}
+                                disabled={!table.getCanPreviousPage()}
+                            >
+                                <ChevronFirst/>
+                            </button>
+                            <button
+                                className="btn btn-sm"
+                                onClick={() => table.previousPage()}
+                                disabled={!table.getCanPreviousPage()}
+                            >
+                                <ChevronLeft/>
+                            </button>
+                            <button
+                                className="btn btn-sm"
+                                onClick={() => {
+                                    table.nextPage();
+                                    console.log(1)
+                                }}
+                                disabled={!table.getCanNextPage()}
+                            >
+                                <ChevronRight/>
+                            </button>
+                            <button
+                                className="btn btn-sm"
+                                onClick={() => table.lastPage()}
+                                disabled={!table.getCanNextPage()}
+                            >
+                                <ChevronLast/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

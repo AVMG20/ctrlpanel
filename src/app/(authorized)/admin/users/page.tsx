@@ -28,6 +28,9 @@ export default async function UsersPage() {
         },
     });
 
+    //wait 10 seconds
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+
     return (
         <div>
             <PageTitle title={"Users"} description={"Manage users in the system"}/>

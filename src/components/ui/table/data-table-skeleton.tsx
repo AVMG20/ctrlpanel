@@ -1,5 +1,5 @@
 import Card from "@/components/ui/card";
-import { ChevronDown } from "lucide-react";
+import {ChevronDown, ChevronFirst, ChevronLast, ChevronLeft, ChevronRight} from "lucide-react";
 import {DeleteButton, EditButton} from "@/components/ui/table/action-buttons";
 import * as React from "react";
 
@@ -44,30 +44,69 @@ export default function DataTableSkeleton() {
                 </tbody>
             </table>
 
-            <div className="flex items-center justify-between space-x-2 py-4">
-                <div className="text-sm text-base-content/50">
-                    0 of 0 row(s) selected.
+            <div>
+                <div className="flex justify-end">
+                    <div className="dropdown flex dropdown-end">
+                        <label tabIndex={0} className="btn btn-sm w-full sm:w-auto">
+                            Page size 10 <ChevronDown className="ml-2 h-4 w-4"/>
+                        </label>
+                        <ul tabIndex={0}
+                            className="dropdown-content menu z-10 p-2 shadow bg-base-100 rounded-box w-52">
+                            {[10, 20, 50, 100]
+                                .map((pageSize) => {
+                                    return (
+                                        <li key={pageSize}>
+                                            <label className="label cursor-pointer">
+                                                <span className="label-text">{pageSize}</span>
+                                                <input
+                                                    type="checkbox"
+                                                    className="checkbox"
+                                                />
+                                            </label>
+                                        </li>
+                                    )
+                                })}
+                        </ul>
+                    </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 items-center">
-                    <div className="flex gap-1 text-sm text-base-content/50">
-                        <span>Page</span>
-                        <strong>0 of 0</strong>
+                <div className="flex items-center justify-between space-x-2 py-4">
+                    <div className="text-sm text-base-content/50">
+                        0 of 0 row(s) selected.
                     </div>
 
-                    <div className="space-x-2 flex items-center">
-                        <button
-                            className="btn btn-outline btn-sm"
-                            disabled={true}
-                        >
-                            Previous
-                        </button>
-                        <button
-                            className="btn btn-outline btn-sm"
-                            disabled={true}
-                        >
-                            Next
-                        </button>
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 items-center">
+                        <div className="flex gap-1 text-sm text-base-content/50">
+                            <span>Page</span>
+                            <strong>0 of 0</strong>
+                        </div>
+
+                        <div className="space-x-2 flex items-center">
+                            <button
+                                className="btn btn-sm"
+                                disabled={true}
+                            >
+                                <ChevronFirst/>
+                            </button>
+                            <button
+                                className="btn btn-sm"
+                                disabled={true}
+                            >
+                                <ChevronLeft/>
+                            </button>
+                            <button
+                                className="btn btn-sm"
+                                disabled={true}
+                            >
+                                <ChevronRight/>
+                            </button>
+                            <button
+                                className="btn btn-sm"
+                                disabled={true}
+                            >
+                                <ChevronLast/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
