@@ -18,7 +18,7 @@ export function DeleteButton({onClick}: {onClick?: () => void}) {
 
 export function ViewButton({onClick}: {onClick?: () => void}) {
     return (
-        <button className={'btn btn-xs btn-primary btn-outline border-0'} onClick={onClick}>
+        <button className={'btn btn-xs btn-secondary btn-outline border-0'} onClick={onClick}>
             <Eye/>
         </button>
     )

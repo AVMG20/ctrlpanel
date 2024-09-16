@@ -15,7 +15,7 @@ export async function createTicket(prevState: BaseFormState, formData: FormData)
     const { success, data, error } = z
         .object({
             title: z.string().min(3, 'Title must be at least 3 characters'),
-            priority: z.enum(['normal', 'medium', 'high']),
+            priority: z.enum(['low', 'medium', 'high']),
             description: z.string().min(10, 'Description must be at least 10 characters'),
         })
         .safeParse(getFormDataEntries(formData));
@@ -31,7 +31,6 @@ export async function createTicket(prevState: BaseFormState, formData: FormData)
                 title: data.title,
                 priority: data.priority,
                 description: data.description,
-                status: "Open",
                 userId: session.user.id,
             },
         });

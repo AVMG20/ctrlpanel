@@ -1,5 +1,4 @@
-'use client';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface FormTextareaProps {
     id: string;
@@ -7,7 +6,7 @@ interface FormTextareaProps {
     value?: string;
     errorMessage?: string;
     placeholder?: string;
-    required?: boolean;
+    required?: boolean
 }
 
 const FormTextarea: React.FC<FormTextareaProps> = ({
@@ -18,12 +17,6 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
     placeholder,
     required,
 }) => {
-    const [inputValue, setInputValue] = useState(value || '');
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setInputValue(event.target.value);
-    };
-
     return (
         <div className="form-control mb-3">
             <label className="label" htmlFor={id}>
@@ -32,8 +25,7 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
             <textarea
                 id={id}
                 name={id}
-                value={inputValue}
-                onChange={handleInputChange}
+                defaultValue={value || ''}
                 placeholder={placeholder}
                 className={`textarea textarea-bordered ${errorMessage ? 'textarea-error' : ''}`}
                 required={required}

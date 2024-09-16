@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, {useEffect, useRef} from 'react';
 import { BaseFormState } from '@/types';
 import {useFormState} from "react-dom";
 import useToastEffect from "@/components/util/toaster";
@@ -13,23 +13,24 @@ import {createTicket} from "@/app/(authorized)/tickets/actions";
 
 export function TicketForm() {
     const [state, action] = useFormState<BaseFormState, FormData>(createTicket, {});
+    const formRef = useRef<HTMLFormElement>(null);
     useToastEffect(state);
 
     useEffect(() => {
         if (state.success) {
-            // Handle success (e.g., navigate to the ticket list or display a success message)
+            formRef.current?.reset();
         }
     }, [state]);
 
     const priorityOptions = [
-        { value: 'normal', label: 'Normal' },
+        { value: 'low', label: 'Low' },
         { value: 'medium', label: 'Medium' },
         { value: 'high', label: 'High' },
     ];
 
     return (
         <Card title="Create Ticket">
-            <form action={action}>
+            <form ref={formRef} action={action}>
                 <FormInput
                     id="title"
                     label="Title"
