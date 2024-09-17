@@ -34,6 +34,9 @@ export async function editProfile(prevState: BaseFormState, formData: FormData) 
         return {message: 'An error occurred'}
     }
 
+    //revalidate /admin/users
+    revalidatePath('/admin/users')
+
     // return a success message
     return {
         message: 'Profile updated successfully',

@@ -4,8 +4,8 @@ import UsersTable from "@/app/(authorized)/admin/users/table";
 import type {Metadata} from "next";
 
 // Next.js will invalidate the cache when a
-// request comes in, at most once every 60 seconds.
-export const revalidate = 60;
+// request comes in, at most once every 5 minutes.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
     title: "Admin | Users",
