@@ -3,6 +3,8 @@ import PageTitle from "@/components/util/page-title";
 import Card from "@/components/ui/card";
 import settings from "@/lib/settings";
 
+export const revalidate = 300;
+
 export default async function Home() {
     const motd = await settings.get('motd') as string;
 

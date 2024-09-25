@@ -3,6 +3,7 @@
 import {object, string, ZodError} from "zod";
 import settings from "@/lib/settings";
 import {BaseFormState} from "@/types";
+import { revalidatePath } from "next/cache";
 
 const settingsSchema = object({
     theme: string({required_error: 'Theme is required'}).optional(),
@@ -33,6 +34,9 @@ export default async function saveSettings(prevState: BaseFormState, formData: F
             success: false
         }
     }
+
+    //we revalidate everything when settings are saved
+    revalidatePath('/')
 
     return {
         message: 'Settings saved',
