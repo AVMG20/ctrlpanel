@@ -36,7 +36,7 @@ export default async function saveSettings(prevState: BaseFormState, formData: F
     }
 
     //we revalidate everything when settings are saved
-    revalidatePath('/')
+    revalidatePath('/', 'layout')
 
     return {
         message: 'Settings saved',
