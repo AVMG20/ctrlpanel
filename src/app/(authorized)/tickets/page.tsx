@@ -1,8 +1,8 @@
-import { auth } from "@/auth";
+import {auth} from "@/auth";
 import PageTitle from "@/components/util/page-title";
-import { prisma } from "@/prisma";
+import {prisma} from "@/prisma";
 import TicketsTable from "./table";
-import { TicketForm } from "@/app/(authorized)/tickets/form";
+import {TicketForm} from "@/app/(authorized)/tickets/form";
 import Card from "@/components/ui/card";
 
 export default async function Page() {
@@ -32,7 +32,7 @@ export default async function Page() {
 
     return (
         <div>
-            <PageTitle title="Tickets" description="Create a new ticket or view existing ones." />
+            <PageTitle title="Tickets" description="Create a new ticket or view existing ones."/>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
                 {/* No tickets found */}

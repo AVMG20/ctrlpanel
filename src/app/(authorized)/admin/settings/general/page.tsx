@@ -8,9 +8,14 @@ import SkeletonForm from "@/app/(authorized)/admin/settings/skeleton-form";
 import Tooltip from "@/components/ui/tooltip";
 import useToastEffect from "@/components/util/toaster";
 import {BaseFormState} from "@/types";
+import FormRichEditor from "@/components/ui/form/form-rich-editor";
+import {Code} from "@/lib/settings";
 
 export default function NotificationSettings() {
-    const [settings, setSettings] = useState({});
+    const [settings, setSettings] = useState<Record<Code, string>>({
+        motd: "",
+        theme: ""
+    });
     const [loading, setLoading] = useState(true);
     const [state, action] = useFormState<BaseFormState, FormData>(saveSettings, {});
 
@@ -28,9 +33,12 @@ export default function NotificationSettings() {
     return (
         <Card title={'General settings'}>
             <form action={action}>
-                <div className="grid grid-cols-1 lg:grid-cols-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <ThemeSelector settings={settings}/>
+
+                    <FormRichEditor value={settings.motd} id={'motd'} label={'Message of the Day'}/>
                 </div>
+
                 <div className="mt-4 flex justify-end">
                     <SubmitBtn label={'Save'}/>
                 </div>
@@ -41,7 +49,7 @@ export default function NotificationSettings() {
 
 // simple real-time theme swapper
 function ThemeSelector({settings}: { settings: Record<string, string>}) {
-    const [theme, setTheme] = useState(settings?.theme);
+    const [theme, setTheme] = useState(settings.theme);
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -59,6 +67,7 @@ function ThemeSelector({settings}: { settings: Record<string, string>}) {
                     value={theme}
                     name={'theme'}>
                 <option value={'ctrlpanel'}>Ctrlpanel (Default)</option>
+                <option value={'ctrlpanel_dark'}>Dark Ctrlpanel</option>
                 <option value={'soly'}>Soly</option>
                 <option value={'firestorm'}>Fire Storm</option>
             </select>

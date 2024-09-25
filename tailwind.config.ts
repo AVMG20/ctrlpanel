@@ -42,6 +42,30 @@ const config: Config = {
                 "--tab-border": "1px",
                 "--tab-radius": "0.375rem"
             },
+
+            ctrlpanel_dark: {
+                "primary": "#10B981",  // Green as the primary color
+                "secondary": "#b9109d",  // Neutral grey for secondary elements
+                "accent": "#b99110",  // Accent color for non-primary highlights
+                "neutral": "#0a0a0a",  // Pure black for neutral background elements
+                "base-100": "#0a0a0a",  // Very dark grey for the main background
+                "info": "#3B82F6",  // Blue for informational elements
+                "success": "#22C55E",  // Green for success states
+                "warning": "#F59E0B",  // Orange for warning states
+                "error": "#EF4444",  // Red for error states
+
+                // Border, button, and element styles that match the sleek, minimal design in the image
+                "--rounded-box": "0.5rem",  // Slightly rounded boxes for cards and containers
+                "--rounded-btn": "0.375rem",  // Button rounding for a clean look
+                "--rounded-badge": "1.25rem",  // Rounded badges, slightly softer look
+                "--animation-btn": "0.25s",  // Button hover animation speed
+                "--animation-input": "0.2s",  // Input focus animation speed
+                "--btn-focus-scale": "0.97",  // Slight focus scale on buttons
+                "--border-btn": "1px",  // Thin button border for clean definition
+                "--tab-border": "1px",  // Thin tab border for minimalist look
+                "--tab-radius": "0.375rem",  // Slightly rounded tabs
+            },
+
             soly: {
                 "primary": "#6366F1",
                 "secondary": "#383b48",

@@ -1,8 +1,11 @@
 import {ChartNoAxesColumn, ChartNoAxesColumnIncreasing, Coins, Server} from "lucide-react";
 import PageTitle from "@/components/util/page-title";
 import Card from "@/components/ui/card";
+import settings from "@/lib/settings";
 
 export default async function Home() {
+    const motd = await settings.get('motd') as string;
+
     return (
         <>
             <PageTitle title="Dashboard" description="Overview of your account and services."/>
@@ -10,14 +13,9 @@ export default async function Home() {
 
             <div className="grid gap-5 grid-cols-1 md:grid-cols-2">
                 {/* MOTD Card */}
-                <Card title="Message of the day">
-                    <div className="prose">
-                        <p>⚡ Welcome to the platform! Here's what's new:</p>
-                        <ul>
-                            <li>🚀 New server regions added</li>
-                            <li>🛠 Maintenance on Sept 25</li>
-                            <li>🎉 Special promotion on server upgrades</li>
-                        </ul>
+                <Card title="">
+                    <div className="prose lg:prose-xl" dangerouslySetInnerHTML={{__html: motd}}>
+
                     </div>
                 </Card>
 

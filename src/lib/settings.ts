@@ -1,6 +1,7 @@
 import {prisma} from '@/prisma';
 
-export type Code = 'theme' | 'example' | string
+//allowed setting codes
+export type Code = 'theme' | 'motd'
 
 class Settings {
     private static instance: Settings;
@@ -16,10 +17,12 @@ class Settings {
     }
 
     // Get a single setting with type inference
-    async get(code: Code, defaultValue: string|null = null): Promise<Code | null> {
+    async get<T extends string | null>(code: Code, defaultValue: T = null as T): Promise<string | T> {
         const setting = await prisma.setting.findUnique({
             where: { code },
         });
+
+        // Return the setting value or the default value
         return setting ? (setting.value as string) : defaultValue;
     }
 
@@ -30,7 +33,7 @@ class Settings {
         });
 
         return settings.reduce((acc, setting) => {
-            acc[setting.code] = setting.value as string;
+            acc[setting.code as Code]  = setting.value as string;
             return acc;
         }, {} as Record<Code, string>);
     }
@@ -39,7 +42,7 @@ class Settings {
     async getAll(): Promise<Record<Code, string>> {
         const settings = await prisma.setting.findMany();
         return settings.reduce((acc, setting) => {
-            acc[setting.code] = setting.value as string;
+            acc[setting.code as Code] = setting.value as string;
             return acc;
         }, {} as Record<Code, string>);
     }

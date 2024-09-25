@@ -2,3 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.ProseMirror:focus {
+    outline: none;
+}
+
+.tiptap {
+    @apply p-3
+}

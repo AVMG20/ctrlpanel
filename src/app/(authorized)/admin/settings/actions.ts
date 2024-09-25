@@ -1,6 +1,6 @@
 'use server';
 
-import {object, string, ZodString, ZodError} from "zod";
+import {object, string, ZodError} from "zod";
 import settings from "@/lib/settings";
 import {BaseFormState} from "@/types";
 
