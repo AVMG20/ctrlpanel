@@ -99,3 +99,30 @@ enum TicketStatus {
   in_progress
   closed
 }
+
+model Package {
+  id          String  @id @default(cuid())
+  name        String  @db.VarChar(255)
+  description String  @db.Text
+  enabled     Boolean
+
+  // limits
+  memory Int
+  swap   Int
+  disk   Int
+  io     Int
+  cpu    Int
+
+  // feature_limits
+  databases   Int
+  allocations Int
+  backups     Int
+
+  // pterodactyl
+  location Int
+  nest     Int
+
+  // meta
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt()
+}

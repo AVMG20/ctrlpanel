@@ -3,7 +3,7 @@ import React, {HTMLInputTypeAttribute} from 'react';
 interface FormInputProps<> {
     id: string;
     label: string;
-    value?: string;
+    value?: string|number;
     errorMessage?: string
     placeholder?: string;
     type?: HTMLInputTypeAttribute | undefined

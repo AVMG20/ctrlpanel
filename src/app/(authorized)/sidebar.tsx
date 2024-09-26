@@ -2,15 +2,18 @@
 
 import Link from "next/link";
 import {
+    Boxes,
     Coins,
-    Home, LucideMail,
-    MonitorCog, PanelsTopLeft,
-    Radio,
+    Home,
+    LucideMail,
+    PanelsTopLeft,
     Receipt,
     Server,
-    Settings, ShieldHalf,
+    Settings,
+    ShieldHalf,
     ShoppingBasket,
-    TicketIcon, Tickets,
+    TicketIcon,
+    Tickets,
     Users
 } from "lucide-react";
 import {usePathname} from "next/navigation";
@@ -57,7 +60,7 @@ export default function Sidebar() {
                         <div className="divider py-5 text-sm">
                             Administration
                         </div>
-                        <SidebarLink href={'/dashboard#'} title={'Server Configs'} Icon={MonitorCog}/>
+                        <SidebarLink href={'/admin/packages'} title={'Packages'} Icon={Boxes}/>
                         <SidebarLink href={'/dashboard#'} title={'Credit Store'} Icon={ShoppingBasket}/>
                         <SidebarLink href={'/dashboard#'} title={'Vouchers'} Icon={Receipt}/>
                         <SidebarLink href={'/dashboard#'} title={'Content'} Icon={PanelsTopLeft}/>
