@@ -49,8 +49,8 @@ export default function Sidebar() {
                             Moderation
                         </div>
                         <SidebarLink href={'/admin/users'} title={'Users'} Icon={Users}/>
-                        <SidebarLink href={'/dashboard#'} title={'Servers'} Icon={Server}/>
-                        <SidebarLink href={'/dashboard#'} title={'Tickets'} Icon={Tickets}/>
+                        <SidebarLink href={'/dashboard#'} title={'X Servers'} Icon={Server}/>
+                        <SidebarLink href={'/dashboard#'} title={'X Tickets'} Icon={Tickets}/>
                     </>
                 </Gate>
 
@@ -61,10 +61,10 @@ export default function Sidebar() {
                             Administration
                         </div>
                         <SidebarLink href={'/admin/packages'} title={'Packages'} Icon={Boxes}/>
-                        <SidebarLink href={'/dashboard#'} title={'Credit Store'} Icon={ShoppingBasket}/>
-                        <SidebarLink href={'/dashboard#'} title={'Vouchers'} Icon={Receipt}/>
-                        <SidebarLink href={'/dashboard#'} title={'Content'} Icon={PanelsTopLeft}/>
-                        <SidebarLink href={'/dashboard#'} title={'Emails'} Icon={LucideMail}/>
+                        <SidebarLink href={'/dashboard#'} title={'X Credit Store'} Icon={ShoppingBasket}/>
+                        <SidebarLink href={'/dashboard#'} title={'X Vouchers'} Icon={Receipt}/>
+                        <SidebarLink href={'/dashboard#'} title={'X Content'} Icon={PanelsTopLeft}/>
+                        <SidebarLink href={'/dashboard#'} title={'X Emails'} Icon={LucideMail}/>
                         <SidebarLink href={'/admin/settings/general'} title={'Settings'} Icon={Settings}/>
                     </>
                 </Gate>

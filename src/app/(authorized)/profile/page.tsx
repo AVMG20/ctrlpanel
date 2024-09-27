@@ -9,6 +9,8 @@ export default async function Page() {
     const session = await auth();
     if (!session) return null; // there should always be a session here
 
+    //TODO: if the user logged in using a provider, remove edit profile and change password form
+
     return (
         <div>
             <div className="flex justify-between items-center flex-wrap mb-5">

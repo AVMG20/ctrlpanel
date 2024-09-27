@@ -12,7 +12,7 @@ declare module "next-auth" {
             name: string
             email: string
             image: string
-            role: string
+            role: 'admin' | 'mod' | 'user'
         }
     }
 
@@ -21,7 +21,7 @@ declare module "next-auth" {
         name: string
         email: string
         image: string
-        role: string
+        role: 'admin' | 'mod' | 'user'
     }
 }
 
