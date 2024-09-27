@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tip Tap Fixes */
+.tiptap {
+    @apply p-3
+}
 .ProseMirror:focus {
     outline: none;
 }
 
-.tiptap {
-    @apply p-3
+li>p:first-child {
+    margin:0;
 }
