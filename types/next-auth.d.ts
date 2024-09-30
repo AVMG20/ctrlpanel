@@ -1,4 +1,5 @@
 import NextAuth, {Session, User} from "next-auth"
+import {Role} from "@/types";
 
 
 
@@ -12,7 +13,7 @@ declare module "next-auth" {
             name: string
             email: string
             image: string
-            role: 'admin' | 'mod' | 'user'
+            role: Role
         }
     }
 
@@ -21,7 +22,7 @@ declare module "next-auth" {
         name: string
         email: string
         image: string
-        role: 'admin' | 'mod' | 'user'
+        role: Role
     }
 }
 

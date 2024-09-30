@@ -9,6 +9,7 @@ import Tooltip from "@/components/ui/tooltip";
 import useToastEffect from "@/components/util/toaster";
 import {BaseFormState} from "@/types";
 import FormRichEditor from "@/components/ui/form/form-rich-editor";
+import config from '@/../tailwind.config';
 import {Code} from "@/lib/settings";
 
 export default function NotificationSettings() {
@@ -51,6 +52,13 @@ export default function NotificationSettings() {
 function ThemeSelector({settings}: { settings: Record<string, string>}) {
     const [theme, setTheme] = useState(settings.theme);
 
+    const themes = config.daisyui.themes;
+    // The first item in the array is an object containing custom themes
+    const customThemes = Object.keys(themes[0]);
+
+    // The rest of the items are predefined theme names
+    const predefinedThemes = themes.slice(1);
+
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
     }, [theme])
@@ -66,10 +74,20 @@ function ThemeSelector({settings}: { settings: Record<string, string>}) {
                     className="select select-bordered w-full"
                     value={theme}
                     name={'theme'}>
-                <option value={'ctrlpanel'}>Ctrlpanel (Default)</option>
-                <option value={'ctrlpanel_dark'}>Dark Ctrlpanel</option>
-                <option value={'soly'}>Soly</option>
-                <option value={'firestorm'}>Fire Storm</option>
+                <optgroup label="Custom Themes">
+                    {customThemes.map((themeName) => (
+                        <option key={themeName} value={themeName}>
+                            {themeName}
+                        </option>
+                    ))}
+                </optgroup>
+                <optgroup label="Predefined Themes">
+                    {predefinedThemes.map((themeName: string) => (
+                        <option key={themeName} value={themeName}>
+                            {themeName}
+                        </option>
+                    ))}
+                </optgroup>
             </select>
         </div>
     )

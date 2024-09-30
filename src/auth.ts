@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import {comparePassword} from "@/lib/password";
 import {PrismaAdapter} from "@auth/prisma-adapter";
 import {prisma} from "@/prisma";
+import { Role } from "./types";
 
 export const signInSchema = object({
     email: string({required_error: "Email is required"})
@@ -68,7 +69,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
         async session({ session, token, user }) {
             if (session.user) {
                 session.user.id = token.id as string //append the user id to the session
-                session.user.role = token.role as string //append the user role to the session
+                session.user.role = token.role as Role //append the user role to the session
             }
 
             return session;
@@ -92,7 +93,6 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
         },
         authorize: async (credentials) => {
             try {
-                console.log(1)
                 const {email, password} = await signInSchema.parseAsync(credentials)
 
                 const user = await prisma.user.findFirst({
@@ -114,7 +114,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
                     id: user.id,
                     name: user.name,
                     email: user.email,
-                    role: user.role,
+                    role: user.role as Role,
                     image: user.image,
                 }
             } catch (error) {
