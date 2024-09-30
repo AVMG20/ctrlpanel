@@ -50,7 +50,7 @@ export default function Sidebar() {
                         </div>
                         <SidebarLink href={'/admin/users'} title={'Users'} Icon={Users}/>
                         <SidebarLink href={'/dashboard#'} title={'X Servers'} Icon={Server}/>
-                        <SidebarLink href={'/dashboard#'} title={'X Tickets'} Icon={Tickets}/>
+                        <SidebarLink href={'/admin/tickets'} title={'Tickets'} Icon={Tickets}/>
                     </>
                 </Gate>
 

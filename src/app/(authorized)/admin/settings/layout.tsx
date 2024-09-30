@@ -1,11 +1,15 @@
-'use client'
 import React from 'react';
 import Link from 'next/link';
 import {usePathname} from "next/navigation";
 import PageTitle from "@/components/util/page-title";
+import type {Metadata} from "next";
+import Tab from "@/app/(authorized)/admin/settings/tab";
 
+export const metadata: Metadata = {
+    title: "Settings",
+};
 
-export default function SettingsLayout({
+export default async function SettingsLayout({
     children,
 }: {
     children: React.ReactNode;
@@ -27,10 +31,3 @@ export default function SettingsLayout({
     );
 }
 
-function Tab({href, title}: {href: string; title: string}) {
-    const pathname = usePathname();
-
-    return <Link href={`/admin/settings/${href}`} className={`tab ${pathname.endsWith(href) ? 'tab-active' : ''}`}>
-        {title}
-    </Link>
-}

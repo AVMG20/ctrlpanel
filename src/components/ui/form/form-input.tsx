@@ -1,32 +1,48 @@
-import React, {HTMLInputTypeAttribute} from 'react';
+import React, { HTMLInputTypeAttribute } from 'react';
+import Tooltip from "@/components/ui/tooltip";
 
-interface FormInputProps<> {
+interface FormInputProps {
     id: string;
     label: string;
-    value?: string|number;
-    errorMessage?: string
+    value?: string | number;
+    errorMessage?: string;
     placeholder?: string;
-    type?: HTMLInputTypeAttribute | undefined
-    required?: boolean
+    type?: HTMLInputTypeAttribute;
+    required?: boolean;
+    tooltip?: string;
 }
 
-const FormInput: React.FC<FormInputProps> = ({ id, label, value,  errorMessage, placeholder, type, required }) => {
+const FormInput: React.FC<FormInputProps> = ({
+    id,
+    label,
+    value,
+    errorMessage,
+    placeholder,
+    type,
+    required,
+    tooltip
+}) => {
     return (
         <div className="form-control mb-3">
-            <label className="label" htmlFor={id}>
-                <span className="label-text">{label}</span>
-            </label>
+            <div className="flex items-center justify-between">
+                <label className="label" htmlFor={id}>
+                    <span className="label-text">
+                        {label}
+                    </span>
+                </label>
+                {tooltip && <Tooltip tip={tooltip}/>}
+            </div>
             <input
                 id={id}
                 name={id}
-                type={type ? type : 'text'}
+                type={type || 'text'}
                 defaultValue={value || ''}
                 placeholder={placeholder}
-                className={`input input-bordered ${errorMessage ? 'input-error' : ''}`}
+                className={`input input-bordered w-full ${errorMessage ? 'input-error' : ''}`}
                 required={required}
             />
             {errorMessage && (
-                <span className="text-error">{errorMessage}</span>
+                <span className="text-error text-sm mt-1">{errorMessage}</span>
             )}
         </div>
     );

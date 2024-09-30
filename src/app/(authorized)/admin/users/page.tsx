@@ -8,7 +8,7 @@ import type {Metadata} from "next";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-    title: "Admin | Users",
+    title: "Users",
 };
 
 export default async function UsersPage() {

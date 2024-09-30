@@ -4,7 +4,10 @@ const nextConfig = {
         locales: ['en', 'nl', 'fr'],
         defaultLocale: 'en',
         localeDetection: false, //TODO in the future we can enable this and handle this using middleware
-    }
+    },
+    images: {
+        domains: ['cdn.discordapp.com'],
+    },
 };
 
 export default nextConfig;

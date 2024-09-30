@@ -8,6 +8,7 @@ import {
     Bold, Italic, Strikethrough, Code, XCircle, List,
     ListOrdered, Code2, Quote, Minus, CornerUpLeft, CornerUpRight
 } from 'lucide-react'
+import Tooltip from '@/components/ui/tooltip';
 
 const MenuBar = () => {
     const { editor } = useCurrentEditor()
@@ -194,15 +195,6 @@ const MenuBar = () => {
                 <button type="button"
                         onClick={() => editor.chain()
                             .focus()
-                            .setHardBreak()
-                            .run()}
-                        className="btn btn-xs"
-                >
-                    <Minus size={18}/>
-                </button>
-                <button type="button"
-                        onClick={() => editor.chain()
-                            .focus()
                             .undo()
                             .run()}
                         disabled={
@@ -231,15 +223,6 @@ const MenuBar = () => {
                         className="btn btn-xs"
                 >
                     <CornerUpRight size={18}/>
-                </button>
-                <button type="button"
-                        onClick={() => editor.chain()
-                            .focus()
-                            .unsetAllMarks()
-                            .run()}
-                        className="btn btn-xs"
-                >
-                    <XCircle size={18}/>
                 </button>
                 <button type="button"
                         onClick={() => editor.chain()
@@ -309,6 +292,7 @@ interface FormRichEditorProps {
     value?: string;
     errorMessage?: string;
     required?: boolean;
+    tooltip?: string;
 }
 
 const FormRichEditor: React.FC<FormRichEditorProps> = ({
@@ -316,16 +300,20 @@ const FormRichEditor: React.FC<FormRichEditorProps> = ({
     label,
     value = '',
     errorMessage,
-    required
+    required,
+    tooltip
 }) => {
     const [content, setContent] = useState<string>(value);
 
     return (
         <div className="form-control mb-3">
-            {/* Label */}
-            <label className="label" htmlFor={id}>
-                <span className="label-text">{label}</span>
-            </label>
+            {/* Label and Tooltip */}
+            <div className="flex items-center justify-between">
+                <label className="label" htmlFor={id}>
+                    <span className="label-text">{label}</span>
+                </label>
+                {tooltip && <Tooltip tip={tooltip} />}
+            </div>
 
             {/* Hidden Input to Submit Content */}
             <input type="hidden" id={id} name={id} value={content} required={required} />

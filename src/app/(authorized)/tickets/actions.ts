@@ -3,7 +3,7 @@
 import { BaseFormState } from '@/types';
 import { prisma } from '@/prisma';
 import { z } from 'zod';
-import { getFormDataEntries } from '@/utils/util';
+import { getFormDataEntries } from '@/lib/util';
 import {auth} from "@/auth";
 import {revalidatePath} from "next/cache";
 
@@ -41,6 +41,7 @@ export async function createTicket(prevState: BaseFormState, formData: FormData)
 
     //revalidate path
     revalidatePath('/tickets');
+    revalidatePath('/admin/tickets');
 
     // Return a success message
     return {

@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+export const ucFirst = (str: string): string => {
+    if (!str) return str;
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 export function getFormDataEntries(formData: FormData) {
     const data: Record<string, string> = {}
 
@@ -10,11 +15,6 @@ export function getFormDataEntries(formData: FormData) {
 
     return data
 }
-
-export const ucFirst = (str: string): string => {
-    if (!str) return str;
-    return str.charAt(0).toUpperCase() + str.slice(1);
-};
 
 export const numericString = (schema: z.ZodNumber) => z.preprocess((a) => {
     if (typeof a === 'string') {
@@ -27,5 +27,15 @@ export const numericString = (schema: z.ZodNumber) => z.preprocess((a) => {
         return a;
     } else {
         throw new Error('Invalid input: must be string or number');
+    }
+}, schema);
+
+export const booleanString = (schema: z.ZodBoolean) => z.preprocess((a) => {
+    if (a === 'true') {
+        return true;
+    } else if (a === 'false') {
+        return false;
+    } else {
+        throw new Error('Invalid boolean string');
     }
 }, schema);

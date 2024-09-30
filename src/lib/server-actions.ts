@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { auth } from '@/auth';
-import { getFormDataEntries } from '@/utils/util';
+import { getFormDataEntries } from '@/lib/util';
 import { BaseFormState } from "@/types";
 
 type ServerActionResult = { error?: string; message?: string; success?: boolean } | Record<string, string[]>;

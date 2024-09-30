@@ -10,7 +10,7 @@ import {createPackage} from '@/app/(authorized)/admin/packages/actions';
 import {BaseFormState} from "@/types";
 import FormRichEditor from "@/components/ui/form/form-rich-editor";
 import {Nest, Location} from "@/lib/pterodactyl/types";
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'nextjs-toploader/app';
 
 interface ServerConfigurationFormProps {
     nests: Nest[],
@@ -50,6 +50,7 @@ export function ServerConfigurationForm({
                     id="name"
                     label="Name"
                     required={true}
+                    tooltip={'The name of the package as it will appear to users.'}
                     errorMessage={state?.name?.shift()}
                 />
                 <FormRichEditor
@@ -60,6 +61,7 @@ export function ServerConfigurationForm({
                 <FormSelect
                     id="location"
                     label="Location"
+                    tooltip={'The location where this package will be available.'}
                     options={locationOptions}
                     required={true}
                     errorMessage={state?.location?.shift()}

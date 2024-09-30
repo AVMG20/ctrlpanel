@@ -5,7 +5,7 @@ import {prisma} from "@/prisma";
 import {z} from 'zod';
 import {Prisma} from "@prisma/client";
 import {revalidatePath} from "next/cache";
-import {getFormDataEntries} from "@/utils/util";
+import {getFormDataEntries} from "@/lib/util";
 
 export async function editProfile(prevState: BaseFormState, formData: FormData) {
     // validate data
@@ -19,13 +19,18 @@ export async function editProfile(prevState: BaseFormState, formData: FormData) 
 
     try {
         // update user
-        await prisma.user.update({
+        const user = await prisma.user.update({
             where: {id: data.id},
             data: {
                 name: data.name,
                 email: data.email
             }
         });
+
+        //revalidate /admin/users
+        revalidatePath('/admin/users')
+        revalidatePath(`/admin/users/${user.id}`)
+
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
             return {email: ['Email is already taken']}
@@ -33,9 +38,6 @@ export async function editProfile(prevState: BaseFormState, formData: FormData) 
 
         return {message: 'An error occurred'}
     }
-
-    //revalidate /admin/users
-    revalidatePath('/admin/users')
 
     // return a success message
     return {

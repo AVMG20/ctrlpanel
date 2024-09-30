@@ -3,7 +3,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/table/data-table";
 import {ViewButton} from "@/components/ui/table/action-buttons";
-import Date from "@/components/util/date";
 import StatusBadge from "@/components/util/status-badge";
 
 type TicketData = {
@@ -31,10 +30,7 @@ const Columns: ColumnDef<TicketData>[] = [
     {
         header: "Date",
         accessorKey: "createdAt",
-        cell: ({ row }) => {
-            const value = row.getValue("createdAt") as Date;
-            return <Date date={value} />;
-        },
+        cell: ({ row }) => new Date(row.getValue("createdAt")).toLocaleString(),
     },
     {
         header: "Status",

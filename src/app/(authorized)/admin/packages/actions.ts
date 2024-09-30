@@ -1,12 +1,12 @@
 'use server';
 import { z } from 'zod';
-import { numericString } from '@/utils/util';
+import { numericString } from '@/lib/util';
 import { revalidatePath } from 'next/cache';
 import { prisma } from "@/prisma";
 import { BaseFormState } from "@/types";
 import { createSafeServerAction } from '@/lib/server-actions';
 
-const createPackageSchema = z.object({
+const packageSchema = z.object({
     name: z.string().min(3, 'Name must be at least 3 characters'),
     description: z.string().min(10, 'Description must be at least 10 characters'),
     enabled: z.boolean().default(true),
@@ -22,7 +22,7 @@ const createPackageSchema = z.object({
     nest: numericString(z.number()),
 });
 
-type CreatePackageData = z.infer<typeof createPackageSchema>;
+type CreatePackageData = z.infer<typeof packageSchema>;
 
 const createPackageAction = async (
     prevState: BaseFormState,
@@ -39,7 +39,7 @@ const createPackageAction = async (
 };
 
 export const createPackage = createSafeServerAction({
-    schema: createPackageSchema,
+    schema: packageSchema,
     action: createPackageAction,
     authenticated: true,
 });

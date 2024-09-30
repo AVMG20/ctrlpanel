@@ -1,13 +1,19 @@
-'use client';
 import React from 'react';
+import Tooltip from "@/components/ui/tooltip";
+
+interface Option {
+    value: string|number;
+    label: string;
+}
 
 interface FormSelectProps {
     id: string;
     label: string;
-    options: { value: string|number; label: string }[];
+    options: Option[];
     value?: string;
     errorMessage?: string;
     required?: boolean;
+    tooltip?: string;
 }
 
 const FormSelect: React.FC<FormSelectProps> = ({
@@ -17,12 +23,16 @@ const FormSelect: React.FC<FormSelectProps> = ({
     value,
     errorMessage,
     required,
+    tooltip
 }) => {
     return (
         <div className="form-control mb-3">
-            <label className="label" htmlFor={id}>
-                <span className="label-text">{label}</span>
-            </label>
+            <div className="flex items-center justify-between">
+                <label className="label" htmlFor={id}>
+                    <span className="label-text">{label}</span>
+                </label>
+                {tooltip && <Tooltip tip={tooltip} />}
+            </div>
             <select
                 id={id}
                 name={id}
