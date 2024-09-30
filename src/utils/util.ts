@@ -1,4 +1,4 @@
-import { z, ZodTypeAny } from 'zod';
+import { z } from 'zod';
 
 export function getFormDataEntries(formData: FormData) {
     const data: Record<string, string> = {}
@@ -16,12 +16,16 @@ export const ucFirst = (str: string): string => {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const numericString = (schema: ZodTypeAny) => z.preprocess((a) => {
+export const numericString = (schema: z.ZodNumber) => z.preprocess((a) => {
     if (typeof a === 'string') {
-        return parseInt(a, 10)
+        const parsed = parseInt(a, 10);
+        if (isNaN(parsed)) {
+            throw new Error('Invalid numeric string');
+        }
+        return parsed;
     } else if (typeof a === 'number') {
         return a;
     } else {
-        return undefined;
+        throw new Error('Invalid input: must be string or number');
     }
 }, schema);
