@@ -1,38 +1,53 @@
 'use client';
-import React from 'react';
-import Head from 'next/head';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { Lock, Key, ShieldAlert, ArrowLeft, Home } from "lucide-react";
 
 const Custom403 = () => {
     const router = useRouter();
+    const [wiggle, setWiggle] = useState(false);
+    const [rotate, setRotate] = useState(false);
+
+    useEffect(() => {
+        const wiggleInterval = setInterval(() => setWiggle(prev => !prev), 1000);
+        const rotateInterval = setInterval(() => setRotate(prev => !prev), 2000);
+        return () => {
+            clearInterval(wiggleInterval);
+            clearInterval(rotateInterval);
+        };
+    }, []);
 
     return (
-        <>
-            <Head>
-                <title>403 Unauthorized - YourSiteName</title>
-            </Head>
-            <div className="flex items-center justify-center min-h-screen bg-base-200">
-                <div className="text-center">
-                    <h1 className="text-9xl font-bold text-primary">403</h1>
-                    <p className="text-2xl font-semibold mt-4">Unauthorized Access</p>
-                    <p className="mt-2">You do not have permission to view this page.</p>
-                    <div className="mt-6">
-                        <button
-                            className="btn btn-primary mr-2"
-                            onClick={() => router.back()}
-                        >
-                            Go Back
-                        </button>
-                        <button
-                            className="btn btn-secondary"
-                            onClick={() => router.push('/')}
-                        >
-                            Home Page
-                        </button>
-                    </div>
+        <div className="min-h-screen bg-gradient-to-b from-secondary to-accent flex flex-col items-center justify-center p-4">
+            <div className="text-center bg-base-100 rounded-lg shadow-xl p-8 max-w-lg w-full">
+                <h1 className="text-8xl font-bold mb-4 text-secondary">4<Lock className={`inline ${wiggle ? 'animate-wiggle' : ''}`} size={80}/>3</h1>
+                <p className="text-3xl font-semibold mb-6 text-primary">Oops! Access Denied!</p>
+
+                <div className="flex justify-center space-x-4 mb-8">
+                    <Key className={`text-info ${wiggle ? 'animate-wiggle' : ''}`} size={48} />
+                    <ShieldAlert className={`text-warning ${rotate ? 'animate-spin' : ''}`} size={48} />
+                </div>
+
+                <p className="text-xl mb-8">Looks like you've stumbled upon a secret area! Unfortunately, your VIP pass seems to be missing.</p>
+
+                <div className="flex justify-center space-x-4">
+                    <button
+                        className="btn btn-primary btn-lg group transition-all duration-300 ease-in-out transform hover:scale-105"
+                        onClick={() => router.back()}
+                    >
+                        <ArrowLeft className="mr-2 transition-all duration-300 ease-in-out transform group-hover:-translate-x-2" />
+                        Go Back
+                    </button>
+                    <button
+                        className="btn btn-secondary btn-lg group transition-all duration-300 ease-in-out transform hover:scale-105"
+                        onClick={() => router.push('/')}
+                    >
+                        <Home className="mr-2 transition-all duration-300 ease-in-out transform group-hover:rotate-12" />
+                        Home Page
+                    </button>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

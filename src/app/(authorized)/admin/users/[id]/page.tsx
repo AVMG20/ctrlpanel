@@ -4,6 +4,7 @@ import Card from "@/components/ui/card";
 import Image from "next/image";
 import TicketsTable from "@/app/(authorized)/admin/tickets/table";
 import type {Metadata} from "next";
+import PageTitle from "@/components/util/page-title";
 
 export const revalidate = 300;
 
@@ -33,7 +34,8 @@ export default async function UserOverviewPage({ params }: { params: { id: strin
     const user = await getUserData(params.id);
 
     return (
-        <div className="p-4">
+        <div>
+            <PageTitle title={user.name || "User"} description="View user details" />
             <h1 className="text-2xl font-bold mb-4">User Overview</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Card title="User Details">

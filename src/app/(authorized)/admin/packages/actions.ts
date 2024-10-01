@@ -22,6 +22,11 @@ const packageSchema = z.object({
     nest: numericString(z.number()),
 });
 
+const updatePackageSchema = packageSchema.extend({
+    id: z.string(),
+});
+
+type UpdatePackageData = z.infer<typeof updatePackageSchema>;
 type CreatePackageData = z.infer<typeof packageSchema>;
 
 const createPackageAction = async (
@@ -41,5 +46,30 @@ const createPackageAction = async (
 export const createPackage = createSafeServerAction({
     schema: packageSchema,
     action: createPackageAction,
+    authenticated: true,
+});
+
+const updatePackageAction = async (
+    prevState: BaseFormState,
+    data: UpdatePackageData
+) => {
+    try {
+        const { id, ...updateData } = data;
+        await prisma.package.update({
+            where: { id },
+            data: updateData,
+        });
+        revalidatePath('/admin/packages');
+        revalidatePath(`/admin/packages/edit/${id}`);
+        return { message: 'Package updated successfully', success: true };
+    } catch (err) {
+        console.error(err);
+        return { message: 'An error occurred while updating the package' };
+    }
+};
+
+export const updatePackage = createSafeServerAction({
+    schema: updatePackageSchema,
+    action: updatePackageAction,
     authenticated: true,
 });

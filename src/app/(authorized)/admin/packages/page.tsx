@@ -21,7 +21,7 @@ export default async function Page() {
             <PageTitle title={"Server Configurations"}
                        description={"Manage users in the system"}
                        actions={<>
-                           <Link href="/admin/packages/new">
+                           <Link href="/admin/packages/edit">
                                <button className="btn btn-sm btn-secondary">
                                    <PlusIcon/>
                                    Create Package
