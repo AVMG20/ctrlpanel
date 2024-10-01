@@ -28,32 +28,27 @@ class PterodactylClient {
         });
     }
 
-    public getLocations = unstable_cache(
+    public getLocations = this.createCachedMethod(
         async (): Promise<Listing<Location>> => {
             const result = await this.client.get<Listing<Location>>(`application/locations?per_page=${PterodactylClient.PER_PAGE}`);
             return result.data;
         },
-        ['pterodactyl-locations'],
-        {
-            tags: ['pterodactyl'],
-            revalidate: 300, // 5 minutes
-        }
+        'pterodactyl-locations'
     );
 
-    public async getEggs(nestId: number): Promise<AxiosResponse> {
-        return await this.client.get(`application/nests/${nestId}/eggs?include=nest,variables&per_page=${PterodactylClient.PER_PAGE}`);
-    }
+    public getEggs = this.createCachedMethod(
+        async (nestId: number): Promise<AxiosResponse> => {
+            return await this.client.get(`application/nests/${nestId}/eggs?include=nest,variables&per_page=${PterodactylClient.PER_PAGE}`);
+        },
+        'pterodactyl-eggs'
+    );
 
-    public getNests = unstable_cache(
+    public getNests = this.createCachedMethod(
         async (): Promise<Listing<Nest>> => {
             const result = await this.client.get<Listing<Nest>>(`application/nests?include=eggs&per_page=${PterodactylClient.PER_PAGE}`);
             return result.data;
         },
-        ['pterodactyl-nests'],
-        {
-            tags: ['pterodactyl'],
-            revalidate: 300,  // 5 minutes
-        }
+        'pterodactyl-nests'
     );
 
     public async getServers(): Promise<AxiosResponse> {
@@ -94,6 +89,21 @@ class PterodactylClient {
 
     public async deleteServer(pterodactylId: number): Promise<AxiosResponse> {
         return await this.client.delete(`application/servers/${pterodactylId}`);
+    }
+
+    private createCachedMethod<T>(
+        method: (...args: any[]) => Promise<T>,
+        cacheKey: string,
+        revalidate: number = 300
+    ) {
+        return unstable_cache(
+            method,
+            [cacheKey],
+            {
+                tags: ['pterodactyl'],
+                revalidate,
+            }
+        );
     }
 }
 
