@@ -1,5 +1,6 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
 import {Listing, Nest, Location, Egg} from "@/lib/pterodactyl/types";
+import { unstable_cache } from 'next/cache';
 
 interface PterodactylSettings {
     apiKey: string;
@@ -27,17 +28,31 @@ class PterodactylClient {
         });
     }
 
-    public async getLocations(): Promise<AxiosResponse<Listing<Location>>> {
-        return await this.client.get(`application/locations?per_page=${PterodactylClient.PER_PAGE}`);
-    }
+    public getLocations = unstable_cache(
+        async (): Promise<AxiosResponse<Listing<Location>>> => {
+            return await this.client.get(`application/locations?per_page=${PterodactylClient.PER_PAGE}`);
+        },
+        ['pterodactyl-locations'],
+        {
+            tags: ['pterodactyl'],
+            revalidate: 300, // 5 minutes
+        }
+    );
 
     public async getEggs(nestId: number): Promise<AxiosResponse> {
         return await this.client.get(`application/nests/${nestId}/eggs?include=nest,variables&per_page=${PterodactylClient.PER_PAGE}`);
     }
 
-    public async getNests(): Promise<AxiosResponse<Listing<Nest>>> {
-        return await this.client.get(`application/nests?include=eggs&per_page=${PterodactylClient.PER_PAGE}`);
-    }
+    public getNests = unstable_cache(
+        async (): Promise<AxiosResponse<Listing<Nest>>> => {
+            return await this.client.get(`application/nests?include=eggs&per_page=${PterodactylClient.PER_PAGE}`);
+        },
+        ['pterodactyl-nests'],
+        {
+            tags: ['pterodactyl'],
+            revalidate: 300,  // 5 minutes
+        }
+    );
 
     public async getServers(): Promise<AxiosResponse> {
         return await this.client.get(`application/servers?per_page=${PterodactylClient.PER_PAGE}`);
