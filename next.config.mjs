@@ -7,7 +7,6 @@ const nextConfig = {
     },
     images: {
         domains: ['cdn.discordapp.com'],
-        formats: ['image/webp'],
     },
 };
 

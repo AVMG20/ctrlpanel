@@ -67,7 +67,7 @@ const editCategoryAction = async (
         if (image?.size > 0) {
             //fetch previous image path and delete previous image
             const previousCategory = await prisma.category.findUnique({ where: { id } });
-            if (previousCategory?.image) await ImageService.deleteImage(previousCategory.image);
+            if (previousCategory?.image) await ImageService.deleteImage(previousCategory.image).catch(() => console.error('Failed to delete previous image'));
 
             // Store the new image
             imagePath = await ImageService.storeImage(image) as string;
@@ -99,7 +99,7 @@ const deleteCategoryAction = async (prevState: BaseFormState, data: { id: string
     try {
         const result = await prisma.category.delete({ where: { id: data.id } });
 
-        await ImageService.deleteImage(result.image);
+        await ImageService.deleteImage(result.image).catch(() => console.error('Failed to delete previous image'));
 
         revalidatePath('/admin/categories');
         revalidatePath('/store');
