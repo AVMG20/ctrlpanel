@@ -128,10 +128,10 @@ model Package {
 }
 
 model Category {
-  id          String   @id @default(cuid())
-  name        String   @db.VarChar(255)
-  description String   @db.Text
-  images      String[] // This will store URLs or paths to images
+  id          String @id @default(cuid())
+  name        String @db.VarChar(255)
+  description String @db.Text
+  image       String // This will store path to image
   nest        Int // This corresponds to the nest in Package
 
   // meta
