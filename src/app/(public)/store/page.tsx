@@ -15,7 +15,7 @@ export default async function Store() {
                           key={category.id}
                           className="card bg-base-100 hover:shadow-2xl transition-shadow duration-300 transform">
                         <Image
-                            src={`/images/${category.image}`}
+                            src={`/${category.image}`}
                             alt={category.name}
                             width={300}
                             height={200}
