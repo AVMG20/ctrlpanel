@@ -6,7 +6,7 @@ const nextConfig = {
         localeDetection: false, //TODO in the future we can enable this and handle this using middleware
     },
     images: {
-        domains: ['cdn.discordapp.com'],
+        domains: ['cdn.discordapp.com', 'next-ctrlpanel.avmg.dev'],
     },
 };
 
