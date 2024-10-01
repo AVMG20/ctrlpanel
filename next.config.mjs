@@ -9,6 +9,8 @@ const nextConfig = {
         remotePatterns: [{
             hostname: 'cdn.discordapp.com',
         }],
+        path: '/_next/image',
+        loader: 'default',
     },
     trailingSlash: false
 };
