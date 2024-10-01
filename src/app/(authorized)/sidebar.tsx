@@ -5,6 +5,7 @@ import {
     Boxes,
     Coins,
     Home,
+    Layers3,
     LucideMail,
     PanelsTopLeft,
     Receipt,
@@ -61,6 +62,7 @@ export default function Sidebar() {
                             Administration
                         </div>
                         <SidebarLink href={'/admin/packages'} title={'Packages'} Icon={Boxes}/>
+                        <SidebarLink href={'/admin/categories'} title={'Categories'} Icon={Layers3}/>
                         <SidebarLink href={'/dashboard#'} title={'X Credit Store'} Icon={ShoppingBasket}/>
                         <SidebarLink href={'/dashboard#'} title={'X Vouchers'} Icon={Receipt}/>
                         <SidebarLink href={'/dashboard#'} title={'X Content'} Icon={PanelsTopLeft}/>

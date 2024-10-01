@@ -10,6 +10,10 @@ export function getFormDataEntries(formData: FormData) {
 
     // @ts-ignore
     for (const [key, value] of formData.entries()) {
+        if (value === '' || value === '<p></p>') {
+            continue
+        }
+
         data[key] = value
     }
 

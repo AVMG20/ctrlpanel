@@ -325,6 +325,7 @@ const FormRichEditor: React.FC<FormRichEditorProps> = ({
                     slotBefore={<MenuBar />}
                     extensions={extensions}
                     content={content}
+                    immediatelyRender={false}
                 />
             </div>
 

@@ -10,7 +10,7 @@ interface FormSelectProps {
     id: string;
     label: string;
     options: Option[];
-    value?: string;
+    value?: string | number;
     errorMessage?: string;
     required?: boolean;
     tooltip?: string;

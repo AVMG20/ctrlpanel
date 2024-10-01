@@ -1,5 +1,11 @@
 import Link from "next/link";
 
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+    return [];
+}
+
 const configurations = [
     { id: 1, name: 'Bargain 1', ram: '1 GB', price: '0.85', vCore: 0.5, databases: 1, storage: 10240 }, // 10 GB
     { id: 2, name: 'Bargain 2', ram: '2 GB', price: '1.70', vCore: 1, databases: 2, storage: 20480 }, // 20 GB
@@ -12,11 +18,8 @@ const configurations = [
 ];
 
 export default function PricingCards({ params }: { params: { service: string } }) {
-    const random = Math.floor(Math.random() * 1000);
-
     return (
         <>
-            <p>{random}</p>
             <div className={'p-5 text-center'}>
                <h1 className={'text-2xl'}> Minecraft Server Hosting</h1>
                 <p>Money Back Guarantee | 24/7 + Hundreds of Features | Minecraft Hosting from $0.85/mo</p>

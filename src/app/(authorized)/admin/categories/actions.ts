@@ -1,26 +1,53 @@
 'use server';
-import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
-import { prisma } from "@/prisma";
-import { BaseFormState } from "@/types";
-import { createSafeServerAction } from '@/lib/server-actions';
+import {z} from 'zod';
+import {revalidatePath} from 'next/cache';
+import {BaseFormState} from "@/types";
+import {createSafeServerAction} from '@/lib/server-actions';
+import {numericString} from "@/lib/util";
+import ImageService from "@/lib/image-service";
+import { prisma } from '@/prisma';
 
 const categorySchema = z.object({
     name: z.string().min(3, 'Name must be at least 3 characters'),
-    description: z.string().min(10, 'Description must be at least 10 characters'),
-    images: z.array(z.string().url('Must be a valid URL')).min(1, 'At least one image is required'),
-    nest: z.number().int().positive('Nest must be a positive integer'),
+    description: z.string().min(10, 'Description must be at least 10 characters').optional().nullable(),
+    image: z
+        .any()
+        .optional()
+        .refine((file) => {
+            if (file?.size === 0) return true;
+            else return file?.size <= 5000000;
+        }, 'Max image size is 5MB.')
+        .refine((file) => {
+            if (file?.size === 0) return true;
+            else return ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file?.type)}, "Only .jpg, .jpeg, .png and .webp formats are supported."),
+    nest: numericString(z.number()),
 });
 
-type CreateCategoryData = z.infer<typeof categorySchema>;
+type CategoryData = z.infer<typeof categorySchema>;
+
+const editCategorySchema = categorySchema.extend({
+    id: z.string(),
+});
+
+type EditCategoryData = z.infer<typeof editCategorySchema>;
 
 const createCategoryAction = async (
     prevState: BaseFormState,
-    data: CreateCategoryData
+    data: CategoryData
 ) => {
     try {
-        await prisma.category.create({ data });
+        const imagePath = await ImageService.storeImage(data.image) as string;
+
+        await prisma.category.create({
+            data: {
+                ...data,
+                image: imagePath
+            }
+        });
+
         revalidatePath('/admin/categories');
+        revalidatePath('/store');
+
         return { message: 'Category created successfully', success: true };
     } catch (err) {
         console.error(err);
@@ -28,8 +55,76 @@ const createCategoryAction = async (
     }
 };
 
+const editCategoryAction = async (
+    prevState: BaseFormState,
+    data: EditCategoryData
+) => {
+    try {
+        const { id, image, ...updateData } = data;
+
+        // Store the image if it exists
+        let imagePath;
+        if (image?.size > 0) {
+            //fetch previous image path and delete previous image
+            const previousCategory = await prisma.category.findUnique({ where: { id } });
+            if (previousCategory?.image) await ImageService.deleteImage(previousCategory.image);
+
+            // Store the new image
+            imagePath = await ImageService.storeImage(image) as string;
+        }
+
+        // If the description is empty, set it to null
+        if (!updateData.description) updateData.description = null;
+
+        await prisma.category.update({
+            where: { id },
+            data: {
+                ...updateData,
+                ...(imagePath && { image: imagePath }),
+            }
+        });
+
+        revalidatePath('/admin/categories');
+        revalidatePath('/store');
+        revalidatePath(`/admin/categories/${id}`);
+
+        return { message: 'Category updated successfully', success: true };
+    } catch (err) {
+        console.error(err);
+        return { message: 'An error occurred while updating the category' };
+    }
+};
+
+const deleteCategoryAction = async (prevState: BaseFormState, data: { id: string }) => {
+    try {
+        const result = await prisma.category.delete({ where: { id: data.id } });
+
+        await ImageService.deleteImage(result.image);
+
+        revalidatePath('/admin/categories');
+        revalidatePath('/store');
+
+        return { message: 'Category deleted successfully', success: true };
+    } catch (err) {
+        console.error(err);
+        return { message: 'An error occurred while deleting the category' };
+    }
+}
+
 export const createCategory = createSafeServerAction({
     schema: categorySchema,
     action: createCategoryAction,
+    authenticated: true,
+});
+
+export const editCategory = createSafeServerAction({
+    schema: editCategorySchema,
+    action: editCategoryAction,
+    authenticated: true,
+});
+
+export const deleteCategory = createSafeServerAction({
+    schema: z.object({ id: z.string() }),
+    action: deleteCategoryAction,
     authenticated: true,
 });

@@ -40,8 +40,6 @@ export default auth(async (req: NextRequest) => {
 
         // Check if user's role is allowed for the matched route
         if (!matchedRoute.roles.includes(req.auth.user.role)) {
-            console.log("Forbidden")
-            console.log(req.auth.user.role, matchedRoute)
             const forbiddenUrl = new URL("/403", req.nextUrl.origin); // Redirect to 403 Forbidden
             return NextResponse.redirect(forbiddenUrl);
         }

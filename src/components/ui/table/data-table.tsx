@@ -234,7 +234,6 @@ export function DataTable<TData, TValue>({title, columns, data, visibilityState 
                                 className="btn btn-sm"
                                 onClick={() => {
                                     table.nextPage();
-                                    console.log(1)
                                 }}
                                 disabled={!table.getCanNextPage()}
                             >
