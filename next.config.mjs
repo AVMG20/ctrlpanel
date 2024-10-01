@@ -9,8 +9,8 @@ const nextConfig = {
         remotePatterns: [{
             hostname: 'cdn.discordapp.com',
         }],
-        unoptimized: true,
     },
+    trailingSlash: false
 };
 
 export default nextConfig;
