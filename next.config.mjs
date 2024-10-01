@@ -6,9 +6,9 @@ const nextConfig = {
         localeDetection: false, //TODO in the future we can enable this and handle this using middleware
     },
     images: {
-        domains: ['next-ctrlpanel.avmg.dev'],
-        path: '/_next/image',
-        unoptimized: true,
+        remotePatterns: [{
+            hostname: 'cdn.discordapp.com'
+        }],
     },
 };
 

@@ -12,7 +12,7 @@ export default async function Store() {
                     <Link href={`/store/service/${category.id}`}
                           key={category.id}
                           className="card bg-base-100 hover:shadow-2xl transition-shadow duration-300 transform">
-                        <Image
+                        <img
                             src={'/' + category.image}
                             alt={category.name}
                             width={300}
