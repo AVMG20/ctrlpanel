@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import {prisma} from "@/prisma";
 
+export const revalidate = 3600;
+
 export default async function Store() {
     const categories = await prisma.category.findMany();
 
@@ -12,8 +14,8 @@ export default async function Store() {
                     <Link href={`/store/service/${category.id}`}
                           key={category.id}
                           className="card bg-base-100 hover:shadow-2xl transition-shadow duration-300 transform">
-                        <img
-                            src={'/' + category.image}
+                        <Image
+                            src={`/images/${category.image}`}
                             alt={category.name}
                             width={300}
                             height={200}

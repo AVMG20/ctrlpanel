@@ -7,8 +7,9 @@ const nextConfig = {
     },
     images: {
         remotePatterns: [{
-            hostname: 'cdn.discordapp.com'
+            hostname: 'cdn.discordapp.com',
         }],
+        unoptimized: true,
     },
 };
 
