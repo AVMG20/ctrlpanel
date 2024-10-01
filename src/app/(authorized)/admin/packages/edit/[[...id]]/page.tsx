@@ -38,8 +38,8 @@ export default async function Page({ params }: { params: { id?: string[] } }) {
         <div>
             <PageTitle title={title} description={description} />
             <ServerConfigurationForm
-                nests={nestsResponse.data.data}
-                locations={locationsResponse.data.data}
+                nests={nestsResponse.data}
+                locations={locationsResponse.data}
                 //existingData={existingData}
             />
         </div>

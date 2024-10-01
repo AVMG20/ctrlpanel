@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { id?: string[] } }) {
     return (
         <div>
             <PageTitle title={title} description={description} />
-            <CategoryForm nests={nestsResponse.data.data} editValues={existingData}/>
+            <CategoryForm nests={nestsResponse.data} editValues={existingData}/>
         </div>
     );
 }

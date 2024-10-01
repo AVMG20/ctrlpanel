@@ -29,8 +29,9 @@ class PterodactylClient {
     }
 
     public getLocations = unstable_cache(
-        async (): Promise<AxiosResponse<Listing<Location>>> => {
-            return await this.client.get(`application/locations?per_page=${PterodactylClient.PER_PAGE}`);
+        async (): Promise<Listing<Location>> => {
+            const result = await this.client.get<Listing<Location>>(`application/locations?per_page=${PterodactylClient.PER_PAGE}`);
+            return result.data;
         },
         ['pterodactyl-locations'],
         {
@@ -44,8 +45,9 @@ class PterodactylClient {
     }
 
     public getNests = unstable_cache(
-        async (): Promise<AxiosResponse<Listing<Nest>>> => {
-            return await this.client.get(`application/nests?include=eggs&per_page=${PterodactylClient.PER_PAGE}`);
+        async (): Promise<Listing<Nest>> => {
+            const result = await this.client.get<Listing<Nest>>(`application/nests?include=eggs&per_page=${PterodactylClient.PER_PAGE}`);
+            return result.data;
         },
         ['pterodactyl-nests'],
         {
