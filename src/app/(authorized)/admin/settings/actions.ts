@@ -1,7 +1,7 @@
 'use server';
 
 import {object, string, ZodError} from "zod";
-import settings from "@/lib/settings";
+import settings, { Code } from "@/lib/settings";
 import {BaseFormState} from "@/types";
 import { revalidatePath, revalidateTag } from "next/cache";
 import {getFormDataEntries} from "@/lib/util";
@@ -40,6 +40,6 @@ export default async function saveSettings(prevState: BaseFormState, formData: F
     }
 }
 
-export async function getSettings(): Promise<Record<string, string|null>>{
+export async function getSettings(): Promise<Record<Code, string|null>>{
     return await settings.getAll();
 }

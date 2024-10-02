@@ -64,7 +64,7 @@ export default function Sidebar() {
                         <SidebarLink href={'/admin/packages'} title={'Packages'} Icon={Boxes}/>
                         <SidebarLink href={'/admin/categories'} title={'Categories'} Icon={Layers3}/>
                         <SidebarLink href={'/dashboard#'} title={'X Credit Store'} Icon={ShoppingBasket}/>
-                        <SidebarLink href={'/dashboard#'} title={'X Vouchers'} Icon={Receipt}/>
+                        <SidebarLink href={'/admin/vouchers'} title={'Vouchers'} Icon={Receipt}/>
                         <SidebarLink href={'/dashboard#'} title={'X Content'} Icon={PanelsTopLeft}/>
                         <SidebarLink href={'/dashboard#'} title={'X Emails'} Icon={LucideMail}/>
                         <SidebarLink href={'/admin/settings/general'} title={'Settings'} Icon={Settings}/>
@@ -95,18 +95,41 @@ export default function Sidebar() {
 function SidebarLink({
     href,
     title,
-    Icon
-}: { href: string, title: string, Icon: any }) {
+    Icon,
+    exactMatch = false
+}: {
+    href: string,
+    title: string,
+    Icon: React.ElementType,
+    exactMatch?: boolean
+}) {
     const pathname = usePathname();
-    const isActive = pathname.includes(href)
-        || pathname.includes('settings') && href.includes('settings');
+    let isActive: boolean;
+
+    if (exactMatch) {
+        isActive = pathname === href;
+    } else if (href.startsWith('/admin/settings')) {
+        // Special case for settings: active for any settings page
+        isActive = pathname.startsWith('/admin/settings');
+    } else if (href === '/tickets') {
+        // Special case for tickets: active for user tickets but not admin tickets
+        isActive = pathname.startsWith('/tickets') && !pathname.startsWith('/admin/tickets');
+    } else if (href.startsWith('/admin/')) {
+        // For other admin routes, consider active if pathname starts with href
+        isActive = pathname.startsWith(href);
+    } else {
+        // For other routes, check if pathname includes href, but not for root
+        isActive = pathname.includes(href) && href !== '/';
+    }
 
     return (
         <li>
             <Link href={href} className={`${isActive ? 'bg-base-content/10 border-l-2 border-primary' : ''}`}>
-                <Icon/>
+                <Icon />
                 {title}
             </Link>
         </li>
-    )
+    );
 }
+
+

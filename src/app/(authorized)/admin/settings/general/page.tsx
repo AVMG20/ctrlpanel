@@ -10,12 +10,11 @@ import useToastEffect from "@/components/util/toaster";
 import {BaseFormState} from "@/types";
 import FormRichEditor from "@/components/ui/form/form-rich-editor";
 import config from '@/../tailwind.config';
-import {Code} from "@/lib/settings";
 
 export default function NotificationSettings() {
-    const [settings, setSettings] = useState<Record<Code, string|null>>({
-        motd: "",
-        theme: ""
+    const [settings, setSettings] = useState<Record<string, string|null>>({
+        motd: null,
+        theme: null,
     });
     const [loading, setLoading] = useState(true);
     const [state, action] = useFormState<BaseFormState, FormData>(saveSettings, {});

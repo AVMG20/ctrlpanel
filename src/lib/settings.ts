@@ -1,7 +1,7 @@
 import {prisma} from '@/prisma';
 
 //allowed setting codes
-export type Code = 'theme' | 'motd'
+export type Code = 'theme' | 'motd' | 'creditsName'
 
 class Settings {
     private static instance: Settings;
@@ -16,14 +16,12 @@ class Settings {
         return Settings.instance;
     }
 
-    // Get a single setting with type inference
-    async get<T extends string | null>(code: Code, defaultValue: T = null as T): Promise<string | null  | T> {
+    async get(code: Code, defaultValue?: string): Promise<string | null> {
         const setting = await prisma.setting.findUnique({
             where: { code },
         });
 
-        // Return the setting value or the default value
-        return setting ? (setting.value as string) : defaultValue;
+        return setting ? setting.value : defaultValue ?? null;
     }
 
     // Get multiple settings with type inference
