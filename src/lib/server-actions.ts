@@ -4,11 +4,7 @@ import { getFormDataEntries } from '@/lib/util';
 import { BaseFormState } from "@/types";
 
 type ServerActionResult = { error?: string; message?: string; success?: boolean } | Record<string, string[]>;
-
-type ServerActionFunction<T> = (
-    prevState: BaseFormState,
-    data: T
-) => Promise<ServerActionResult>;
+type ServerActionFunction<T> = (data: T) => Promise<ServerActionResult>;
 
 interface BuilderOptions<T extends z.ZodRawShape> {
     schema: z.ZodObject<T>;
@@ -19,12 +15,13 @@ interface BuilderOptions<T extends z.ZodRawShape> {
 export function createSafeServerAction<T extends z.ZodRawShape>({
     schema,
     action,
-    authenticated = false
+    authenticated = false,
 }: BuilderOptions<T>) {
     return async (
         prevState: BaseFormState,
         formData: FormData
     ): Promise<ServerActionResult> => {
+
         // Authentication check
         if (authenticated) {
             const session = await auth();
@@ -37,9 +34,9 @@ export function createSafeServerAction<T extends z.ZodRawShape>({
             return validationResult.error.formErrors.fieldErrors
         }
 
-        // Execute the original action
         try {
-            return await action(prevState, validationResult.data);
+            // Execute the original action
+            return await action(validationResult.data);
         } catch (error) {
             console.error(error);
             return { error: 'An error occurred while executing the action' };

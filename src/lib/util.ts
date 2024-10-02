@@ -1,20 +1,26 @@
-import { z } from 'zod';
+import {z} from 'zod';
 
 export const ucFirst = (str: string): string => {
     if (!str) return str;
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+export const isEmptyValue = (value: any) =>
+    value === '' ||
+    value === '<p></p>' ||
+    value === undefined ||
+    value === null ||
+    (value instanceof File && value.size === 0);
+
 export function getFormDataEntries(formData: FormData) {
-    const data: Record<string, string> = {}
+    const data: Record<string, string | null | File> = {}
 
-    // @ts-ignore
     for (const [key, value] of formData.entries()) {
-        if (value === '' || value === '<p></p>') {
-            continue
+        if (isEmptyValue(value)) {
+            data[key] = null
+        } else {
+            data[key] = value
         }
-
-        data[key] = value
     }
 
     return data

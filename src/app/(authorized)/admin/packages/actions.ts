@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { numericString } from '@/lib/util';
 import { revalidatePath } from 'next/cache';
 import { prisma } from "@/prisma";
-import { BaseFormState } from "@/types";
 import { createSafeServerAction } from '@/lib/server-actions';
 
 const packageSchema = z.object({
@@ -30,7 +29,6 @@ type UpdatePackageData = z.infer<typeof updatePackageSchema>;
 type CreatePackageData = z.infer<typeof packageSchema>;
 
 const createPackageAction = async (
-    prevState: BaseFormState,
     data: CreatePackageData
 ) => {
     try {
@@ -50,7 +48,6 @@ export const createPackage = createSafeServerAction({
 });
 
 const updatePackageAction = async (
-    prevState: BaseFormState,
     data: UpdatePackageData
 ) => {
     try {

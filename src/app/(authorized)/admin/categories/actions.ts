@@ -1,7 +1,6 @@
 'use server';
 import {z} from 'zod';
 import {revalidatePath} from 'next/cache';
-import {BaseFormState} from "@/types";
 import {createSafeServerAction} from '@/lib/server-actions';
 import {numericString} from "@/lib/util";
 import ImageService from "@/lib/image-service";
@@ -9,16 +8,16 @@ import { prisma } from '@/prisma';
 
 const categorySchema = z.object({
     name: z.string().min(3, 'Name must be at least 3 characters'),
-    description: z.string().min(10, 'Description must be at least 10 characters').optional().nullable(),
+    description: z.string().min(10, 'Description must be at least 10 characters').nullish(),
     image: z
         .any()
-        .optional()
+        .nullish()
         .refine((file) => {
-            if (file?.size === 0) return true;
+            if (!file) return true;
             else return file?.size <= 5000000;
         }, 'Max image size is 5MB.')
         .refine((file) => {
-            if (file?.size === 0) return true;
+            if (!file) return true;
             else return ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file?.type)}, "Only .jpg, .jpeg, .png and .webp formats are supported."),
     nest: numericString(z.number()),
 });
@@ -32,7 +31,6 @@ const editCategorySchema = categorySchema.extend({
 type EditCategoryData = z.infer<typeof editCategorySchema>;
 
 const createCategoryAction = async (
-    prevState: BaseFormState,
     data: CategoryData
 ) => {
     try {
@@ -56,7 +54,6 @@ const createCategoryAction = async (
 };
 
 const editCategoryAction = async (
-    prevState: BaseFormState,
     data: EditCategoryData
 ) => {
     try {
@@ -64,7 +61,7 @@ const editCategoryAction = async (
 
         // Store the image if it exists
         let imagePath;
-        if (image?.size > 0) {
+        if (image) {
             //fetch previous image path and delete previous image
             const previousCategory = await prisma.category.findUnique({ where: { id } });
             if (previousCategory?.image) await ImageService.deleteImage(previousCategory.image).catch(() => console.error('Failed to delete previous image'));
@@ -72,9 +69,6 @@ const editCategoryAction = async (
             // Store the new image
             imagePath = await ImageService.storeImage(image) as string;
         }
-
-        // If the description is empty, set it to null
-        if (!updateData.description) updateData.description = null;
 
         await prisma.category.update({
             where: { id },
@@ -85,8 +79,8 @@ const editCategoryAction = async (
         });
 
         revalidatePath('/admin/categories');
-        revalidatePath('/store');
         revalidatePath(`/admin/categories/${id}`);
+        revalidatePath('/store');
 
         return { message: 'Category updated successfully', success: true };
     } catch (err) {
@@ -95,13 +89,14 @@ const editCategoryAction = async (
     }
 };
 
-const deleteCategoryAction = async (prevState: BaseFormState, data: { id: string }) => {
+const deleteCategoryAction = async (data: { id: string }) => {
     try {
         const result = await prisma.category.delete({ where: { id: data.id } });
 
         await ImageService.deleteImage(result.image).catch(() => console.error('Failed to delete previous image'));
 
         revalidatePath('/admin/categories');
+        revalidatePath(`/admin/categories/${data.id}`);
         revalidatePath('/store');
 
         return { message: 'Category deleted successfully', success: true };
