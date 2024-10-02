@@ -58,7 +58,7 @@ export const editVoucher = createSafeServerAction({
             });
 
             revalidatePath('/admin/vouchers');
-            revalidatePath(`/admin/vouchers/${id}`);
+            revalidatePath(`/admin/vouchers/edit/${id}`);
             return { message: 'Voucher updated successfully', success: true };
         } catch (err) {
             console.error(err);

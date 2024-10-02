@@ -85,7 +85,7 @@ const editCategoryAction = async (
         });
 
         revalidatePath('/admin/categories');
-        revalidatePath(`/admin/categories/${id}`);
+        revalidatePath(`/admin/categories/edit/${id}`);
         revalidatePath('/store');
 
         return { message: 'Category updated successfully', success: true };
@@ -102,7 +102,7 @@ const deleteCategoryAction = async (data: { id: string }) => {
         await ImageService.deleteImage(result.image).catch(() => console.error('Failed to delete previous image'));
 
         revalidatePath('/admin/categories');
-        revalidatePath(`/admin/categories/${data.id}`);
+        revalidatePath(`/admin/categories/edit/${data.id}`);
         revalidatePath('/store');
 
         return { message: 'Category deleted successfully', success: true };
