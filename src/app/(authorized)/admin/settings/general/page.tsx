@@ -13,7 +13,7 @@ import config from '@/../tailwind.config';
 import {Code} from "@/lib/settings";
 
 export default function NotificationSettings() {
-    const [settings, setSettings] = useState<Record<Code, string>>({
+    const [settings, setSettings] = useState<Record<Code, string|null>>({
         motd: "",
         theme: ""
     });
@@ -37,7 +37,7 @@ export default function NotificationSettings() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <ThemeSelector settings={settings}/>
 
-                    <FormRichEditor value={settings.motd} id={'motd'} label={'Message of the Day'}/>
+                    <FormRichEditor value={settings.motd ?? ''} id={'motd'} label={'Message of the Day'}/>
                 </div>
 
                 <div className="mt-4 flex justify-end">
@@ -49,7 +49,7 @@ export default function NotificationSettings() {
 }
 
 // simple real-time theme swapper
-function ThemeSelector({settings}: { settings: Record<string, string>}) {
+function ThemeSelector({settings}: { settings: Record<string, string|null>}) {
     const [theme, setTheme] = useState(settings.theme);
 
     const themes = config.daisyui.themes;
@@ -60,7 +60,7 @@ function ThemeSelector({settings}: { settings: Record<string, string>}) {
     const predefinedThemes = themes.slice(1);
 
     useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme', theme ?? 'ctrlpanel');
     }, [theme])
 
     return (
@@ -72,7 +72,7 @@ function ThemeSelector({settings}: { settings: Record<string, string>}) {
             </label>
             <select onChange={e => setTheme(e.target.value)}
                     className="select select-bordered w-full"
-                    value={theme}
+                    value={theme ?? undefined}
                     name={'theme'}>
                 <optgroup label="Custom Themes">
                     {customThemes.map((themeName) => (

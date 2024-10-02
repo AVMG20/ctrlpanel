@@ -17,7 +17,7 @@ class Settings {
     }
 
     // Get a single setting with type inference
-    async get<T extends string | null>(code: Code, defaultValue: T = null as T): Promise<string | T> {
+    async get<T extends string | null>(code: Code, defaultValue: T = null as T): Promise<string | null  | T> {
         const setting = await prisma.setting.findUnique({
             where: { code },
         });
@@ -27,7 +27,7 @@ class Settings {
     }
 
     // Get multiple settings with type inference
-    async getMultiple(codes: string[]): Promise<Record<Code, string>> {
+    async getMultiple(codes: string[]): Promise<Record<Code, string|null>> {
         const settings = await prisma.setting.findMany({
             where: { code: { in: codes } },
         });
@@ -39,7 +39,7 @@ class Settings {
     }
 
     //Get all settings
-    async getAll(): Promise<Record<Code, string>> {
+    async getAll(): Promise<Record<Code, string|null>> {
         const settings = await prisma.setting.findMany();
         return settings.reduce((acc, setting) => {
             acc[setting.code as Code] = setting.value as string;
@@ -48,7 +48,7 @@ class Settings {
     }
 
     // Save a single setting
-    async save(code: Code, value: string): Promise<void> {
+    async save(code: Code, value: string|null): Promise<void> {
         await prisma.setting.upsert({
             where: { code },
             update: { value },
@@ -57,7 +57,7 @@ class Settings {
     }
 
     // Save multiple settings
-    async saveMultiple(data: Record<Code, string>): Promise<void> {
+    async saveMultiple(data: Record<Code, string|null>): Promise<void> {
         const upserts = Object.entries(data).map(([code, value]) =>
             prisma.setting.upsert({
                 where: { code },

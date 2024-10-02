@@ -77,8 +77,8 @@ model Authenticator {
 }
 
 model Setting {
-  code  String @id
-  value String
+  code  String  @id
+  value String?
 }
 
 model Ticket {

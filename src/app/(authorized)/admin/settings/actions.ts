@@ -4,19 +4,14 @@ import {object, string, ZodError} from "zod";
 import settings from "@/lib/settings";
 import {BaseFormState} from "@/types";
 import { revalidatePath, revalidateTag } from "next/cache";
+import {getFormDataEntries} from "@/lib/util";
 
 const settingsSchema = object({
     theme: string({required_error: 'Theme is required'}).optional(),
 });
 
 export default async function saveSettings(prevState: BaseFormState, formData: FormData) {
-    // get all fields
-    let entries: Record<string, string> = {}
-
-    // @ts-ignore
-    for (const pair of formData.entries()) {
-        entries[pair[0]] = pair[1]
-    }
+    const entries = getFormDataEntries(formData) as Record<string, string|null>;
 
     try {
         // Validate entries
@@ -45,6 +40,6 @@ export default async function saveSettings(prevState: BaseFormState, formData: F
     }
 }
 
-export async function getSettings(): Promise<Record<string, string>>{
+export async function getSettings(): Promise<Record<string, string|null>>{
     return await settings.getAll();
 }
