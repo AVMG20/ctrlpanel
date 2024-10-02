@@ -11,14 +11,9 @@ const categorySchema = z.object({
     description: z.string().min(10, 'Description must be at least 10 characters').nullish(),
     image: z
         .any()
-        .nullish()
-        .refine((file) => {
-            if (!file) return true;
-            else return file?.size <= 5000000;
-        }, 'Max image size is 5MB.')
-        .refine((file) => {
-            if (!file) return true;
-            else return ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file?.type)}, "Only .jpg, .jpeg, .png and .webp formats are supported."),
+        .refine(file => file, 'Image is required')
+        .refine(file => file?.size <= 5000000, 'Max image size is 5MB.')
+        .refine(file => ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file?.type), "Only .jpg, .jpeg, .png and .webp formats are supported."),
     nest: numericString(z.number()),
 });
 
@@ -26,6 +21,17 @@ type CategoryData = z.infer<typeof categorySchema>;
 
 const editCategorySchema = categorySchema.extend({
     id: z.string(),
+    image: z
+        .any()
+        .nullish()
+        .refine((file) => {
+            if (!file) return true;
+            return file?.size <= 5000000;
+        }, 'Max image size is 5MB.')
+        .refine((file) => {
+            if (!file) return true;
+            return ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file?.type);
+        }, "Only .jpg, .jpeg, .png and .webp formats are supported."),
 });
 
 type EditCategoryData = z.infer<typeof editCategorySchema>;
