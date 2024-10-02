@@ -10,17 +10,13 @@ export const isEmptyValue = (value: any) =>
     value === '<p></p>' ||
     value === undefined ||
     value === null ||
-    (value instanceof File && value.size === 0);
+    value?.size === 0;
 
 export function getFormDataEntries(formData: FormData) {
     const data: Record<string, string | null | File> = {}
 
     for (const [key, value] of formData.entries()) {
-        if (isEmptyValue(value)) {
-            data[key] = null
-        } else {
-            data[key] = value
-        }
+        data[key] = isEmptyValue(value) ? null : value;
     }
 
     return data
