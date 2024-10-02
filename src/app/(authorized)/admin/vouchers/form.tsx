@@ -32,7 +32,7 @@ export function VoucherForm({ editValues, creditName }: VoucherFormProps) {
     }, []);
 
     const generateRandomCode = () => {
-        const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+        const code = Math.random().toString(36).substring(2, 10).toUpperCase();
         if (formRef.current) {
             const codeInput = formRef.current.elements.namedItem('code') as HTMLInputElement;
             codeInput.value = code;
