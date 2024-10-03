@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CtrlPanel
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+![CtrlPanel Logo](https://github.com/AVMG20/ctrlpanel/blob/master/logo.png)
+
+An open-source billing panel for Pterodactyl with advanced user management and a flexible credit system.
+
+[![Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://demo-ctrlpanel.avmg.dev)
+[![Docs](https://img.shields.io/badge/docs-read-blue)](https://docs-ctrlpanel.avmg.dev)
+[![GitHub Stars](https://img.shields.io/github/stars/AVMG20/ctrlpanel?style=social)](https://github.com/AVMG20/ctrlpanel)
+
+</div>
+
+[Website](https://docs-ctrlpanel.avmg.dev)
+
+## Features
+
+- **Credit-based Billing**: Users can top up credits and have them deducted over time, providing flexibility to start and cancel services at any time.
+- **User Management**: Comprehensive user administration tools.
+- **Server Management**: Easy-to-use interface for managing Pterodactyl servers.
+- **Ticket System**: Built-in support ticket functionality for user assistance.
+- **Moderation Tools**: Special features for moderators to manage users and tickets.
+- **Administration Panel**: Advanced tools for admins to manage packages, categories, vouchers, and system settings.
+- **Theme Customization**: Choose from 36+ themes to personalize your experience.
+
+## Technology Stack
+
+- **Next.js**: For a fast, SEO-friendly, and highly interactive user interface.
+- **React**: Powering our component-based UI architecture.
+- **Tailwind CSS**: For responsive and customizable styling.
+
+## Local development quick start
+Make sure to update the `.env` accordingly
 
 ```bash
+git clone https://github.com/AVMG20/ctrlpanel.git
+cd ctrlpanel
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000` to see CtrlPanel in action!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation & Documentation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+For detailed information on setup, configuration, and usage, please visit our [documentation](https://docs-ctrlpanel.avmg.dev).
 
-## Learn More
+## Demo
 
-To learn more about Next.js, take a look at the following resources:
+Experience CtrlPanel firsthand by visiting our [live demo](https://demo-ctrlpanel.avmg.dev).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+CtrlPanel is open-source software licensed under the [GPL-3.0 license](LICENSE).
 
-## Deploy on Vercel
+## Support
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If you encounter any issues or have questions, please [open an issue](https://github.com/AVMG20/ctrlpanel/issues) on GitHub.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+<div align="center">
+  Made with ❤️ by the CtrlPanel team
+</div>
