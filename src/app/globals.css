@@ -6,6 +6,11 @@
 .tiptap {
     @apply p-3
 }
+/* tiptap -> p 0 margin*/
+.tiptap p {
+    margin: 0;
+}
+
 .ProseMirror:focus {
     outline: none;
 }

@@ -12,7 +12,14 @@ const nextConfig = {
         path: '/_next/image',
         loader: 'default',
     },
-    trailingSlash: false
+    async rewrites() {
+        return [
+            {
+                source: '/storage/:path*',
+                destination: '/api/storage/:path*',
+            }
+        ]
+    }
 };
 
 export default nextConfig;

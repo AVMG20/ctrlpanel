@@ -35,6 +35,10 @@ const Columns: ColumnDef<PackageData>[] = [
         accessorKey: "name",
     },
     {
+        header: "Price",
+        accessorKey: "price",
+    },
+    {
         header: "Description",
         accessorKey: "description",
     },

@@ -1,12 +1,16 @@
 'use client';
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
+import TextAlign from '@tiptap/extension-text-align'
 import { EditorProvider, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import React, { useState } from 'react'
 import {
     Bold, Italic, Strikethrough, Code, XCircle, List,
-    ListOrdered, Code2, Quote, Minus, CornerUpLeft, CornerUpRight
+    ListOrdered, Code2, Quote, Minus, CornerUpLeft, CornerUpRight,
+    AlignLeft,
+    AlignCenter,
+    AlignRight
 } from 'lucide-react'
 import Tooltip from '@/components/ui/tooltip';
 
@@ -150,6 +154,33 @@ const MenuBar = () => {
                 <button type="button"
                         onClick={() => editor.chain()
                             .focus()
+                            .setTextAlign('left')
+                            .run()}
+                        className={`btn btn-xs ${editor.isActive({textAlign: 'left'}) ? 'btn-active' : ''}`}
+                >
+                    <AlignLeft size={18}/>
+                </button>
+                <button type="button"
+                        onClick={() => editor.chain()
+                            .focus()
+                            .setTextAlign('center')
+                            .run()}
+                        className={`btn btn-xs ${editor.isActive({textAlign: 'center'}) ? 'btn-active' : ''}`}
+                >
+                    <AlignCenter size={18}/>
+                </button>
+                <button type="button"
+                        onClick={() => editor.chain()
+                            .focus()
+                            .setTextAlign('right')
+                            .run()}
+                        className={`btn btn-xs ${editor.isActive({textAlign: 'right'}) ? 'btn-active' : ''}`}
+                >
+                    <AlignRight size={18}/>
+                </button>
+                <button type="button"
+                        onClick={() => editor.chain()
+                            .focus()
                             .toggleBulletList()
                             .run()}
                         className={`btn btn-xs ${editor.isActive('bulletList') ? 'btn-active' : ''}`}
@@ -243,6 +274,9 @@ const MenuBar = () => {
 const extensions = [
     // @ts-ignore
     TextStyle.configure({types: [ListItem.name]}),
+    TextAlign.configure({
+        types: ['heading', 'paragraph'],
+    }),
     StarterKit.configure({
         bulletList: {
             keepMarks: true,

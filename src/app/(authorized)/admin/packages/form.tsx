@@ -11,14 +11,17 @@ import {BaseFormState} from "@/types";
 import FormRichEditor from "@/components/ui/form/form-rich-editor";
 import {Nest, Location} from "@/lib/pterodactyl/types";
 import { useRouter } from 'nextjs-toploader/app';
+import settings from '@/lib/settings';
 
 interface ServerConfigurationFormProps {
     nests: Nest[],
     locations: Location[]
+    creditsName: string
 }
 export function ServerConfigurationForm({
     nests,
-    locations
+    locations,
+    creditsName
 }: ServerConfigurationFormProps) {
     const router = useRouter();
     const [state, action] = useFormState<BaseFormState, FormData>(createPackage, {});
@@ -45,7 +48,6 @@ export function ServerConfigurationForm({
     return (
         <Card title="Create Package">
             <form ref={formRef} action={action}>
-
                 <FormInput
                     id="name"
                     label="Name"
@@ -57,6 +59,13 @@ export function ServerConfigurationForm({
                     id={'description'}
                     label={'Description'}
                     errorMessage={state?.description?.shift()}
+                />
+                <FormInput
+                    id="price"
+                    label="Price"
+                    required={true}
+                    tooltip={`The price of the package in ${creditsName} per month`}
+                    errorMessage={state?.price?.shift()}
                 />
                 <FormSelect
                     id="location"

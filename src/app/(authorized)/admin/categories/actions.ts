@@ -40,12 +40,12 @@ const createCategoryAction = async (
     data: CategoryData
 ) => {
     try {
-        const imagePath = await ImageService.storeImage(data.image) as string;
+        const imagePath = await ImageService.storeImage(data.image);
 
         await prisma.category.create({
             data: {
                 ...data,
-                image: imagePath
+                image: imagePath.original
             }
         });
 
@@ -66,21 +66,22 @@ const editCategoryAction = async (
         const { id, image, ...updateData } = data;
 
         // Store the image if it exists
-        let imagePath;
+        let storedImage;
         if (image) {
             //fetch previous image path and delete previous image
+            //TODO, does not delete previsous image
             const previousCategory = await prisma.category.findUnique({ where: { id } });
             if (previousCategory?.image) await ImageService.deleteImage(previousCategory.image).catch(() => console.error('Failed to delete previous image'));
 
             // Store the new image
-            imagePath = await ImageService.storeImage(image) as string;
+            storedImage = await ImageService.storeImage(image);
         }
 
         await prisma.category.update({
             where: { id },
             data: {
                 ...updateData,
-                ...(imagePath && { image: imagePath }),
+                ...(storedImage && { image: storedImage.original }),
             }
         });
 

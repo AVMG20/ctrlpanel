@@ -67,7 +67,6 @@ function ThemeSelector({settings}: { settings: Record<string, string|null>}) {
 
             <label className="label">
                 <span className="label-text">Theme</span>
-                <Tooltip tip={"You need to rebuild the application for these changes to take permanent effect for everyone."}/>
             </label>
             <select onChange={e => setTheme(e.target.value)}
                     className="select select-bordered w-full"

@@ -3,6 +3,7 @@ import { ServerConfigurationForm } from "@/app/(authorized)/admin/packages/form"
 import client from "@/lib/pterodactyl/pterodactyl";
 import { prisma } from "@/prisma";
 import { notFound } from "next/navigation";
+import settings from "@/lib/settings";
 
 export const revalidate = 360;
 
@@ -17,6 +18,8 @@ export const metadata = {
 }
 
 export default async function Page({ params }: { params: { id?: string[] } }) {
+    const creditsName = await settings.get('creditsName', 'Credits') as string;
+
     const [nestsResponse, locationsResponse] = await Promise.all([
         client.getNests(),
         client.getLocations()
@@ -38,6 +41,7 @@ export default async function Page({ params }: { params: { id?: string[] } }) {
         <div>
             <PageTitle title={title} description={description} />
             <ServerConfigurationForm
+                creditsName={creditsName}
                 nests={nestsResponse.data}
                 locations={locationsResponse.data}
                 //existingData={existingData}

@@ -26,9 +26,7 @@ export function VoucherForm({ editValues, creditName }: VoucherFormProps) {
     }, [state]);
 
     useEffect(() => {
-        if (!editValues) {
-            generateRandomCode();
-        }
+        if (!editValues) generateRandomCode();
     }, []);
 
     const generateRandomCode = () => {

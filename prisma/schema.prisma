@@ -105,6 +105,7 @@ model Package {
   name        String  @db.VarChar(255)
   description String  @db.Text
   enabled     Boolean
+  price       Int     @default(0)
 
   // limits
   memory Int
