@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![CtrlPanel Logo](https://raw.githubusercontent.com/AVMG20/ctrlpanel/main/public/logo.png)
+![CtrlPanel Logo](https://github.com/AVMG20/ctrlpanel/blob/master/logo.png)
 
 An open-source billing panel for Pterodactyl with advanced user management and a flexible credit system.
 
