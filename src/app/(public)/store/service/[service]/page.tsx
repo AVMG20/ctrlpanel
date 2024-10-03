@@ -36,7 +36,7 @@ export default async function PricingCards({params}: { params: { service: string
                 <div className='prose min-w-full text-center lg:prose-lg' dangerouslySetInnerHTML={{__html: category.description}} />
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {packages.map((pack) => (
                     <div key={pack.id}
                          className="card w-full max-w-sm mx-auto bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
@@ -49,7 +49,7 @@ export default async function PricingCards({params}: { params: { service: string
                                     <p className="text-2xl mb-0 font-bold text-accent">{pack.price}</p>
                                     <p className="text-sm text-base-content/70">{creditName} per month</p>
                                 </div>
-                                <div className='prose lg:prose-lg min-w-full' dangerouslySetInnerHTML={{__html: pack.description}}>
+                                <div className='prose min-w-full' dangerouslySetInnerHTML={{__html: pack.description}}>
                                 </div>
                             </div>
                             <div className="card-actions justify-center mt-4">
