@@ -34,7 +34,15 @@ const Columns: ColumnDef<CategoryData>[] = [
     {
         header: "Image",
         accessorKey: "image",
-        cell: ({row}) => <Image src={`/${row.original.image}`} width={32} height={32} alt={`/${row.original.name}`} />
+        cell: ({row}) => <Image src={`/${row.original.image}?size=thumbnail`}
+                                alt={`/${row.original.name}`}
+                                width={32}
+                                height={32}
+                                style={{
+                                    width: '24px',
+                                    height: '24px',
+                                }}
+                                priority={true}/>
     },
     {
         header: "Nest",

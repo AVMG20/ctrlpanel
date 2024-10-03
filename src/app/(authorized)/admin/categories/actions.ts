@@ -69,7 +69,7 @@ const editCategoryAction = async (
         let storedImage;
         if (image) {
             //fetch previous image path and delete previous image
-            //TODO, does not delete previsous image
+            //TODO, does not delete previous images correctly.
             const previousCategory = await prisma.category.findUnique({ where: { id } });
             if (previousCategory?.image) await ImageService.deleteImage(previousCategory.image).catch(() => console.error('Failed to delete previous image'));
 

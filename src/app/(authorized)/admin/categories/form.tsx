@@ -13,6 +13,7 @@ import { Nest } from "@/lib/pterodactyl/types";
 import { useRouter } from 'nextjs-toploader/app';
 import { Category } from '@prisma/client';
 import FormFileInput from "@/components/ui/form/form-file";
+import Image from "next/image";
 
 interface CategoryFormProps {
     nests: Nest[]
@@ -52,12 +53,29 @@ export function CategoryForm({ nests, editValues }: CategoryFormProps) {
                     value={editValues?.description || ''}
                     errorMessage={state?.description?.shift()}
                 />
-                <FormFileInput
-                    id="image"
-                    label="Image"
-                    accept={'image/*'}
-                    errorMessage={state?.image?.shift()}
-                />
+                {/* remove image if a new one is uploaded */}
+                <div className="flex gap-3">
+                    {editValues?.image && (
+                        <div className="flex flex-col mb-3">
+                            <p className={'text-secondary'}>Current image</p>
+                            <Image src={`/${editValues?.image}?size=preview`}
+                                   alt={`/${editValues?.name}`}
+                                   width={128}
+                                   height={64}
+                                   style={{
+                                       width: '128px',
+                                       height: '64px',
+                                   }}
+                                   priority={true}/>
+                        </div>
+                    )}
+                    <FormFileInput
+                        id="image"
+                        label={editValues?.image ? 'Replace Image' : 'Image'}
+                        accept={'image/*'}
+                        errorMessage={state?.image?.shift()}
+                    />
+                </div>
                 <FormSelect
                     id="nest"
                     label="Nest"
